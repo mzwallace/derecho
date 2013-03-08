@@ -4,17 +4,9 @@ module Derecho
 
     class Srv < Thor
 
-      default_task :list
-
-      def initialize(args=[], options={}, config={})
-        super
-
-        @config = Derecho::CLI::Config.new
-        @config.load
-      end
-
       desc 'list', 'List all cloud servers'
       def list
+        @config = Derecho::CLI::Config.new
         rackspace = @config.get('rackspace')
 
         cs = Fog::Compute::RackspaceV2.new(

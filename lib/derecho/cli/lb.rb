@@ -4,17 +4,9 @@ module Derecho
 
     class Lb < Thor
 
-      default_task :list
-
-      def initialize(args=[], options={}, config={})
-        super
-
-        @config = Derecho::CLI::Config.new
-        @config.load
-      end
-
       desc 'list', 'List all cloud load balancers'
       def list
+        @config = Derecho::CLI::Config.new
         rackspace = @config.get('rackspace')
 
         lb = Fog::Rackspace::LoadBalancers.new(
