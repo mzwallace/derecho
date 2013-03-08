@@ -1,6 +1,6 @@
 # Derecho
 
-Cloud automation help for the Rackspace Cloud + Chef + Beanstalkapp 
+Cloud automation help for the Rackspace Cloud + Chef + Beanstalkapp.  Definition for <a href="http://en.wikipedia.org/wiki/Derecho">Derecho</a>
 
 <b><i>WORK IN PROGRESS</i></b>
 
