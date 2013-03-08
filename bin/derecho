@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require 'derecho'
+Derecho.start(ARGV)
