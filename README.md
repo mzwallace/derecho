@@ -42,19 +42,17 @@ beanstalkap:
 $ derecho lb
 ```
 <pre>
-ID   108347
-Name lb-80
-Port 80
-IP Address(es) 166.78.85.207
-Status ACTIVE
-Nodes  1
+Name    lb-80 108347
+Port    80
+IP(s)   166.78.85.207
+Status  ACTIVE
+Node(s) 1
 
-ID   108647
-Name lb-443
-Port 443
-IP Address(es) 166.78.85.207
-Status ACTIVE
-Nodes  2
+Name    lb-443 108647
+Port    443
+IP(s)   166.78.85.207
+Status  ACTIVE
+Node(s) 2
 </pre>
 
 ```
