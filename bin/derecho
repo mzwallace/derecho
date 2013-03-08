@@ -3,4 +3,4 @@
 $:.unshift File.expand_path('../../lib', __FILE__)
 require 'derecho/cli'
 
-Derecho::CLI.start(ARGV)
+Derecho::CLI::Main.start(ARGV)
