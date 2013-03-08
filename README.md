@@ -68,13 +68,13 @@ Status ACTIVE
 Name   cs2 458e3c59-93e5-480d-bd9f-4dcedfb0dfc5
 Flavor 3
 Image  846f98e2-ab52-412a-ab05-91b92be40f52
-IPs    162.38.122.222 (public) 10.177.135.201 (private)
+IP(s)  162.38.122.222 (public) 10.177.135.201 (private)
 Status ACTIVE
 
 Name   cs3 1ebdfbe4-ba87-4b5b-8fe5-1af769745fb8
 Flavor 3
 Image  8a3a9f96-b997-46fd-b7a8-a9e740796ffd
-IPs    162.38.119.60 (public) 10.177.137.239 (private)
+IP(s)  162.38.119.60 (public) 10.177.137.239 (private)
 Status ACTIVE
 </pre>
 
