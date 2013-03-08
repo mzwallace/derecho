@@ -2,7 +2,7 @@
 
 Cloud automation help for the Rackspace Cloud + Chef + Beanstalkapp 
 
-*WORK IN PROGRESS*
+<b><i>WORK IN PROGRESS</i></b>
 
 ## Installation
 
@@ -34,12 +34,36 @@ beanstalkap:
   password: my_beanstalk_password
 </pre>
 
+Check your config with:
+```
+$ derecho config show
+```
+
 ## Usage
 
 <b>Right now there is only support for viewing load balancers and server stats, more to come very soon.</b>
 
+#### All Tasks
+<pre>
+Tasks:
+  derecho config [TASK] [ARGS]  # Manage config settings
+  derecho help [TASK]           # Describe available tasks or one specific task
+  derecho lb [TASK] [ARGS]      # Manage cloud load balancers
+  derecho srv [TASK] [ARGS]     # Manage cloud servers
+</pre>
+
+#### Load Balancers
 ```
 $ derecho lb
+```
+<pre>
+Tasks:
+  derecho lb help [COMMAND]  # Describe subcommands or one specific subcommand
+  derecho lb list            # List all cloud load balancers
+</pre>
+
+```
+$ derecho lb list
 ```
 <pre>
 Name    lb-80 108347
@@ -55,8 +79,18 @@ Status  ACTIVE
 Node(s) 2
 </pre>
 
+#### Servers
 ```
 $ derecho srv
+```
+<pre>
+Tasks:
+  derecho srv help [COMMAND]  # Describe subcommands or one specific subcommand
+  derecho srv list            # List all cloud servers
+</pre>
+
+```
+$ derecho srv list
 ```
 <pre>
 Name   cs1 d7fa99e2-c1c6-48d0-b846-7e3c291682e0
