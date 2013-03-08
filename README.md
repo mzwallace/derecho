@@ -18,25 +18,39 @@ Or install it yourself as:
 
     $ gem install derecho
 
+Config File - The .derecho file needs to be in ~/ or your current working directory.
+```
+$ cat ~/.derecho
+```    
+<pre>
+rackspace:
+  username: my_rackspace_username
+  api_key:  1234567890
+  region:   ord
+
+beanstalkap:
+  domain:   my_beanstalk_subdomain
+  login:    my_beanstalk_login
+  password: my_beanstalk_password
+</pre>
+
 ## Usage
 
-The .derecho file needs to be in ~/ or your current working directory.
-
-<b>Right now there is only support for viewing load balancers stats, more to come very soon.</b>
+<b>Right now there is only support for viewing load balancers and server stats, more to come very soon.</b>
 
 ```
 $ derecho lb
 ```
 <pre>
 ID   108347
-Name secure-80
+Name lb-80
 Port 80
 IP Address(es) 166.78.85.207
 Status ACTIVE
 Nodes  1
 
 ID   108647
-Name secure-443
+Name lb-443
 Port 443
 IP Address(es) 166.78.85.207
 Status ACTIVE
@@ -47,6 +61,23 @@ Nodes  2
 $ derech srv
 ```
 <pre>
+Name   cs1 d7fa99e2-c1c6-48d0-b846-7e3c291682e0
+Flavor 2
+Image  5cebb13a-f783-4f8c-8058-c4182c724ccd
+IPs    166.78.121.30 (public) 10.177.143.130 (private)
+Status ACTIVE
+
+Name   cs2 458e3c59-93e5-480d-bd9f-4dcedfb0dfc5
+Flavor 3
+Image  846f98e2-ab52-412a-ab05-91b92be40f52
+IPs    166.78.122.222 (public) 10.177.135.201 (private)
+Status ACTIVE
+
+Name   cs3 1ebdfbe4-ba87-4b5b-8fe5-1af769745fb8
+Flavor 3
+Image  8a3a9f96-b997-46fd-b7a8-a9e740796ffd
+IPs    166.78.119.60 (public) 10.177.137.239 (private)
+Status ACTIVE
 </pre>
 
 ## Contributing
