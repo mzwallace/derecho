@@ -83,6 +83,7 @@ Status ACTIVE
 1. Ability to add / remove servers to / from load balancers
 2. Ability to create servers like with chef's knife rackspace command but once it's created it would be added to a specified load balancer.
 3. Once a server is spun up the server is added to a beanstalkapp deployment environment and the same revision that lives on other servers would then be deployed to our new server.
+4. Once a server is spun up a ping health check monitor would be added.
 4. More to follow...
 
 ### Wishlist
