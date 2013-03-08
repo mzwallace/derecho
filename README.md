@@ -78,6 +78,10 @@ IP(s)  162.38.119.60 (public) 10.177.137.239 (private)
 Status ACTIVE
 </pre>
 
+## Todo
+
+1. Refactor CLI to move all functionality out of cli.rb and into derecho.rb.
+
 ## Roadmap
 
 1. Ability to add / remove servers to / from load balancers
