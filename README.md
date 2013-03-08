@@ -43,6 +43,12 @@ Status ACTIVE
 Nodes  2
 </pre>
 
+```
+$ derech srv
+```
+<pre>
+</pre>
+
 ## Contributing
 
 1. Fork it
