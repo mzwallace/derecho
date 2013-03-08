@@ -9,21 +9,20 @@ class Derecho::CLI < Thor
 
   desc 'lb', 'List all cloud load balancers'
   def lb
-    load_config
-
+    load_config unless @config
+    rackspace = @config['rackspace']
+    
     lb = Fog::Rackspace::LoadBalancers.new(
-      :rackspace_api_key => @api_key,
-      :rackspace_username => @username,
-      :rackspace_lb_endpoint => "https://#{@region}.loadbalancers.api.rackspacecloud.com/v1.0/"
+      :rackspace_api_key => rackspace['api_key'],
+      :rackspace_username => rackspace['username'],
+      :rackspace_lb_endpoint => "https://#{rackspace['region']}.loadbalancers.api.rackspacecloud.com/v1.0/"
     )
 
     lb.list_load_balancers.body['loadBalancers'].each do |lb|
-     puts "ID #{lb['id']}"
-     puts "Name #{lb['name']}"
-     puts "Port #{lb['port']}"
-     puts 'IP Address(es) \r\n'
-     puts lb['virtualIps'].map { |ip| ip['address'] }.join(',')
-     puts "Status #{lb['status']}"
+     puts "Name    #{lb['name']} #{lb['id']}"
+     puts "Port    #{lb['port']}"
+     puts 'IP(s)   ' + lb['virtualIps'].map { |ip| ip['address'] }.join(',')
+     puts "Status  #{lb['status']}"
      puts "Node(s) #{lb['nodeCount']}"
      puts ''
     end
@@ -31,62 +30,33 @@ class Derecho::CLI < Thor
 
   desc 'srv', 'List all cloud servers'
   def srv
-    load_config
-    cs = CloudServers::Connection.new(:username => @username, :api_key => @api_key, :region => @region)
-    cs.servers.each do |cs|
-      puts cs
-=begin
-      puts "ID #{lb[:id]}"
-      puts "Name #{lb[:name]}"
-      puts "Port #{lb[:port]}"
-      puts "IP Address(es) " + lb[:virtualIps].map { |ip| ip[:address] }.join(",")
-      puts "Status #{lb[:status]}"
-      puts "Nodes #{lb[:nodeCount]}"
+    load_config unless @config
+    rackspace = @config['rackspace']
+    
+    cs = Fog::Compute::RackspaceV2.new(
+      :rackspace_username => rackspace['username'], 
+      :rackspace_api_key => rackspace['api_key'], 
+      :rackspace_endpoint => "https://#{rackspace['region']}.servers.api.rackspacecloud.com/v2"
+    )
+    
+    cs.list_servers.body['servers'].each do |cs|
+      puts "Name   #{cs['name']} #{cs['id']}"
+      puts "Flavor #{cs['flavor']['id']}"
+      puts "Image  #{cs['image']['id']}"
+      puts "IPs    #{cs['addresses']['public'][1]['addr']} (public) #{cs['addresses']['private'][0]['addr']} (private)"
+      puts "Status #{cs['status']}" if cs['status'] == "ACTIVE"
+      puts "Status #{cs['status']} #{cs['progress']}%" if cs['status'] != "ACTIVE"
       puts ""
-=end
     end
   end
-
-=begin
-  desc 'db', 'List all cloud databases'
-  def db
-    load_config
-    lb = CloudLB::Connection.new(:username => @username, :api_key => @api_key, :region => @region)
-
-    lb.list_load_balancers.each do |lb|
-     puts "ID #{lb[:id]}"
-     puts "Name #{lb[:name]}"
-     puts "Port #{lb[:port]}"
-     puts "IP Address(es) " + lb[:virtualIps].map { |ip| ip[:address] }.join(",")
-     puts "Status #{lb[:status]}"
-     puts "Nodes #{lb[:nodeCount]}"
-     puts ""
-    end
-  end
-
-  desc 'file', 'List all cloud files buckets'
-  def file
-    load_config
-    lb = CloudLB::Connection.new(:username => @rs_username, :api_key => @api_key, :region => @region)
-
-    lb.list_load_balancers.each do |lb|
-     puts "ID #{lb[:id]}"
-     puts "Name #{lb[:name]}"
-     puts "Port #{lb[:port]}"
-     puts "IP Address(es) " + lb[:virtualIps].map { |ip| ip[:address] }.join(",")
-     puts "Status #{lb[:status]}"
-     puts "Nodes #{lb[:nodeCount]}"
-     puts ""
-    end
-  end
-=end
+  
   private
 
   def load_config
     config = YAML.load_file(File.expand_path('~/.derecho'))
     config = YAML.load_file('.derecho') unless config
-
-    unless config and config['username'] and config['api_key'] and config['region']
+    
+    unless (config['rackspace']['username'] and config['rackspace']['api_key'] and config['rackspace']['region'])
       puts 'Could not locate configuration information in your .derecho file'
       puts 'Place one in your home directory or the current directory'
       exit
