@@ -1,8 +1,8 @@
 # Derecho
 
-*WORK IN PROGRESS*
-
 Cloud automation help for the Rackspace Cloud + Chef + Beanstalkapp 
+
+*WORK IN PROGRESS*
 
 ## Installation
 
