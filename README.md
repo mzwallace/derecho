@@ -84,7 +84,7 @@ Status ACTIVE
 
 ## Roadmap
 
-1. Easy configuration using derecho concifg
+1. Easy configuration using derecho config
 2. Ability to add / remove servers to / from load balancers
 3. Ability to create servers like with chef's knife rackspace command but once it's created it would be added to a specified load balancer.
 4. Once a server is spun up the server is added to a beanstalkapp deployment environment and the same revision that lives on other servers would then be deployed to our new server.
