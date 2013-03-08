@@ -44,37 +44,37 @@ $ derecho lb
 <pre>
 Name    lb-80 108347
 Port    80
-IP(s)   166.78.85.207
+IP(s)   162.38.85.207
 Status  ACTIVE
 Node(s) 1
 
 Name    lb-443 108647
 Port    443
-IP(s)   166.78.85.207
+IP(s)   162.38.85.207
 Status  ACTIVE
 Node(s) 2
 </pre>
 
 ```
-$ derech srv
+$ derecho srv
 ```
 <pre>
 Name   cs1 d7fa99e2-c1c6-48d0-b846-7e3c291682e0
 Flavor 2
 Image  5cebb13a-f783-4f8c-8058-c4182c724ccd
-IPs    166.78.121.30 (public) 10.177.143.130 (private)
+IPs    162.38.121.30 (public) 10.177.143.130 (private)
 Status ACTIVE
 
 Name   cs2 458e3c59-93e5-480d-bd9f-4dcedfb0dfc5
 Flavor 3
 Image  846f98e2-ab52-412a-ab05-91b92be40f52
-IPs    166.78.122.222 (public) 10.177.135.201 (private)
+IPs    162.38.122.222 (public) 10.177.135.201 (private)
 Status ACTIVE
 
 Name   cs3 1ebdfbe4-ba87-4b5b-8fe5-1af769745fb8
 Flavor 3
 Image  8a3a9f96-b997-46fd-b7a8-a9e740796ffd
-IPs    166.78.119.60 (public) 10.177.137.239 (private)
+IPs    162.38.119.60 (public) 10.177.137.239 (private)
 Status ACTIVE
 </pre>
 
