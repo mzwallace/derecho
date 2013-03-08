@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'derecho'
-Derecho.start(ARGV)
+require 'derecho/cli'
+
+Derecho::CLI.start(ARGV)
