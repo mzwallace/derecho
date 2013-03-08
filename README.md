@@ -1,5 +1,7 @@
 # Derecho
 
+*WORK IN PROGRESS*
+
 Cloud automation help for the Rackspace Cloud + Chef + Beanstalkapp 
 
 ## Installation
@@ -40,8 +42,6 @@ IP Address(es) 166.78.85.207
 Status ACTIVE
 Nodes  2
 </pre>
-
-*WORK IN PROGRESS*
 
 ## Contributing
 
