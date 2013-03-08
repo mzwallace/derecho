@@ -1,8 +1,8 @@
 # Derecho
 
-Cloud automation help for the Rackspace Cloud + Chef + Beanstalkapp 
+Cloud automation help for the Rackspace Cloud + Chef + Beanstalkapp.  Definition for <a href="http://en.wikipedia.org/wiki/Derecho" target="_blank">Derecho</a>.
 
-*WORK IN PROGRESS*
+<b><i>WORK IN PROGRESS</i></b>
 
 ## Installation
 
@@ -34,12 +34,36 @@ beanstalkap:
   password: my_beanstalk_password
 </pre>
 
+Check your config with:
+```
+$ derecho config show
+```
+
 ## Usage
 
 <b>Right now there is only support for viewing load balancers and server stats, more to come very soon.</b>
 
+#### All Tasks
+<pre>
+Tasks:
+  derecho config [TASK] [ARGS]  # Manage config settings
+  derecho help [TASK]           # Describe available tasks or one specific task
+  derecho lb [TASK] [ARGS]      # Manage cloud load balancers
+  derecho srv [TASK] [ARGS]     # Manage cloud servers
+</pre>
+
+#### Load Balancers
 ```
 $ derecho lb
+```
+<pre>
+Tasks:
+  derecho lb help [COMMAND]  # Describe subcommands or one specific subcommand
+  derecho lb list            # List all cloud load balancers
+</pre>
+
+```
+$ derecho lb list
 ```
 <pre>
 Name    lb-80 108347
@@ -55,8 +79,18 @@ Status  ACTIVE
 Node(s) 2
 </pre>
 
+#### Servers
 ```
 $ derecho srv
+```
+<pre>
+Tasks:
+  derecho srv help [COMMAND]  # Describe subcommands or one specific subcommand
+  derecho srv list            # List all cloud servers
+</pre>
+
+```
+$ derecho srv list
 ```
 <pre>
 Name   cs1 d7fa99e2-c1c6-48d0-b846-7e3c291682e0
@@ -84,11 +118,12 @@ Status ACTIVE
 
 ## Roadmap
 
-1. Easy configuration using derecho config
+1. Easy configuration using derecho config *In Progress*
 2. Ability to add / remove servers to / from load balancers
-3. Ability to create servers like with chef's knife rackspace command but once it's created it would be added to a specified load balancer.
+3. Ability to create servers like with chef's knife rackspace command.
 4. Once a server is spun up the server is added to a beanstalkapp deployment environment and the same revision that lives on other servers would then be deployed to our new server.
 5. Once a server is spun up a ping health check monitor would be added.
+6. The server will then be added to the load balancer.
 6. More to follow...
 
 ### Wishlist
