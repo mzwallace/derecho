@@ -88,7 +88,8 @@ Status ACTIVE
 
 ### Wishlist
 
-1. Ability to spin up chef server with one command
+1. Ability to spin up chef server with one command.
+2. A subcommand dedicated to building out entire computer networks from a config file.
 
 ## Contributing
 
