@@ -84,11 +84,12 @@ Status ACTIVE
 
 ## Roadmap
 
-1. Ability to add / remove servers to / from load balancers
-2. Ability to create servers like with chef's knife rackspace command but once it's created it would be added to a specified load balancer.
-3. Once a server is spun up the server is added to a beanstalkapp deployment environment and the same revision that lives on other servers would then be deployed to our new server.
-4. Once a server is spun up a ping health check monitor would be added.
-4. More to follow...
+1. Easy configuration using derecho concifg
+2. Ability to add / remove servers to / from load balancers
+3. Ability to create servers like with chef's knife rackspace command but once it's created it would be added to a specified load balancer.
+4. Once a server is spun up the server is added to a beanstalkapp deployment environment and the same revision that lives on other servers would then be deployed to our new server.
+5. Once a server is spun up a ping health check monitor would be added.
+6. More to follow...
 
 ### Wishlist
 
