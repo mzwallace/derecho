@@ -2,7 +2,33 @@
 
 Cloud automation help for the Rackspace Cloud + Chef + Beanstalkapp.  <a href="http://en.wikipedia.org/wiki/Derecho" target="_blank">Derecho</a>?
 
-<b><i>WORK IN PROGRESS</i></b>
+## <b><i>WORK IN PROGRESS - The Big Idea</i></b>
+Heroku ease of use + robust Chef cookbooks + solid hosting on Rackspace
+```
+$ derecho scale test 4 # scale the test role type to 4 nodes
+```
+<pre>
+$ cat .derecho
+
+[accounts]
+  [rackspace]
+    username = rackspace_username
+    api_key = rackspace_api_key
+    region = rackspace_region
+  [beanstalkapp]
+    domain = beanstalk_domain
+    login = beanstalk_log
+    password = beanstalk_password
+
+[roles]
+  [test]
+    flavor = 2
+    image = 75fk3dhc7fd46
+    role = role[chef_base_role], role[chef_role], recipe[chef_recipe]
+    lb = rackspace_load_balancer_name # optional -- if you want to attach to a load balancer
+    app = beanstalk_repo_name
+    monitor = ping # optional -- rackspace healt monitor type
+</pre>
 
 ## Installation
 
@@ -39,7 +65,7 @@ Check your config with:
 $ derecho config show
 ```
 
-## Usage
+## Actual Working Usage!
 
 <b>Right now there is only support for viewing load balancers and server stats, more to come very soon.</b>
 
@@ -126,34 +152,6 @@ Status ACTIVE
 
 1. Ability to spin up chef server with one command.
 2. A subcommand dedicated to building out entire computer networks from a config file.
-
-## The Big Idea
-Heroku ease of use + robust Chef cookbooks + solid hosting on Rackspace
-```
-$ derecho scale test 4 # scale the test role type to 4 nodes
-```
-<pre>
-$ cat .derecho
-
-[accounts]
-  [rackspace]
-    username = rackspace_username
-    api_key = rackspace_api_key
-    region = rackspace_region
-  [beanstalkapp]
-    domain = beanstalk_domain
-    login = beanstalk_log
-    password = beanstalk_password
-
-[roles]
-  [test]
-    flavor = 2
-    image = 75fk3dhc7fd46
-    role = role[chef_base_role], role[chef_role], recipe[chef_recipe]
-    lb = rackspace_load_balancer_name # optional -- if you want to attach to a load balancer
-    app = beanstalk_repo_name
-    monitor = ping # optional -- rackspace healt monitor type
-</pre>
 
 ## Contributing
 
