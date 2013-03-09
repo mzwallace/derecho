@@ -30,42 +30,7 @@ $ cat .derecho
     monitor = ping # optional -- rackspace healt monitor type
 </pre>
 
-## Installation
-
-Add this line to your application's Gemfile:
-
-    gem 'derecho'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install derecho
-
-Config File - The .derecho file needs to be in ~/ or your current working directory.
-```
-$ cat ~/.derecho
-```    
-<pre>
-rackspace:
-  username: my_rackspace_username
-  api_key:  1234567890
-  region:   ord
-
-beanstalkap:
-  domain:   my_beanstalk_subdomain
-  login:    my_beanstalk_login
-  password: my_beanstalk_password
-</pre>
-
-Check your config with:
-```
-$ derecho config show
-```
-
-## Actual Working Usage!
+## What's actually working?
 
 <b>Right now there is only support for viewing load balancers and server stats, more to come very soon.</b>
 
@@ -133,6 +98,41 @@ Image  8a3a9f96-b997-46fd-b7a8-a9e740796ffd
 IP(s)  162.38.119.60 (public) 10.177.137.239 (private)
 Status ACTIVE
 </pre>
+
+## Installation
+
+Add this line to your application's Gemfile:
+
+    gem 'derecho'
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install derecho
+
+Config File - The .derecho file needs to be in ~/ or your current working directory.
+```
+$ cat ~/.derecho
+```    
+<pre>
+rackspace:
+  username: my_rackspace_username
+  api_key:  1234567890
+  region:   ord
+
+beanstalkap:
+  domain:   my_beanstalk_subdomain
+  login:    my_beanstalk_login
+  password: my_beanstalk_password
+</pre>
+
+Check your config with:
+```
+$ derecho config show
+```
 
 ## Todo
 
