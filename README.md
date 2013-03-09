@@ -114,10 +114,9 @@ Or install it yourself as:
     $ gem install derecho
 
 Config File - The .derecho file needs to be in ~/ or your current working directory.
-```
-$ cat ~/.derecho
-```    
 <pre>
+$ cat ~/.derecho    
+
 rackspace:
   username: my_rackspace_username
   api_key:  1234567890
