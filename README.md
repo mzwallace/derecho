@@ -53,19 +53,17 @@ Tasks:
 </pre>
 
 #### Load Balancers
-```
-$ derecho lb
-```
 <pre>
+$ derecho lb
+
 Tasks:
   derecho lb help [COMMAND]  # Describe subcommands or one specific subcommand
   derecho lb list            # List all cloud load balancers
 </pre>
 
-```
-$ derecho lb list
-```
 <pre>
+$ derecho lb list
+
 Name    lb-80 108347
 Port    80
 IP(s)   162.38.85.207
@@ -80,19 +78,17 @@ Node(s) 2
 </pre>
 
 #### Servers
-```
-$ derecho srv
-```
 <pre>
+$ derecho srv
+
 Tasks:
   derecho srv help [COMMAND]  # Describe subcommands or one specific subcommand
   derecho srv list            # List all cloud servers
 </pre>
 
-```
-$ derecho srv list
-```
 <pre>
+$ derecho srv list
+
 Name   cs1 d7fa99e2-c1c6-48d0-b846-7e3c291682e0
 Flavor 2
 Image  5cebb13a-f783-4f8c-8058-c4182c724ccd
@@ -137,7 +133,7 @@ Heroku ease of use + robust Chef cookbooks + solid hosting on Rackspace
 $ derecho scale test 4 # scale the test role type to 4 nodes
 ```
 <pre>
-$cat .derecho
+$ cat .derecho
 
 [accounts]
   [rackspace]
