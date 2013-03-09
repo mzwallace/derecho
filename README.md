@@ -133,10 +133,6 @@ Check your config with:
 $ derecho config show
 ```
 
-## Todo
-
-1. Refactor CLI to move all functionality out of cli.rb and into derecho.rb.
-
 ## Roadmap
 
 1. Chef solo or Chef server? Or both???
@@ -153,9 +149,13 @@ $ derecho config show
 1. Ability to spin up chef server with one command.
 2. A subcommand dedicated to building out entire computer networks from a config file.
 
+### Todo
+
+1. Refactor CLI to move all Derecho functionality out of Derecho::CLI and into Derecho so it can be used programmatically.
+
 ## Help! 
 
-Cause I'm going to need it ... believe it or not this is my first ruby application ever!
+Cause I'm going to need it ... believe it or not this is my first ruby application ever! Here's to hoping it doesn't become vaporware!
 
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
