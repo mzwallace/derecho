@@ -153,7 +153,9 @@ $ derecho config show
 1. Ability to spin up chef server with one command.
 2. A subcommand dedicated to building out entire computer networks from a config file.
 
-## Contributing
+## Help! 
+
+Cause I'm going to need it ... believe it or not this is my first ruby application ever!
 
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
