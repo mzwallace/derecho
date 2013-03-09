@@ -2,7 +2,7 @@
 
 Cloud automation help for the Rackspace Cloud + Chef + Beanstalkapp.  <a href="http://en.wikipedia.org/wiki/Derecho" target="_blank">Derecho</a>?
 
-## <b><i>WORK IN PROGRESS - The Big Idea</i></b>
+## <b><i>Work In Progress - The Big Idea</i></b>
 Heroku ease of use + robust Chef cookbooks + solid hosting on Rackspace
 ```
 $ derecho scale test 4 # scale the test role type to 4 nodes
