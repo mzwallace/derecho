@@ -13,7 +13,7 @@ describe Derecho do
   end
   
   after :each do 
-    File.delete(path)
+    File.delete(path) if File.exists?(path) 
   end
 
   describe "::Config" do
@@ -34,6 +34,17 @@ describe Derecho do
     it "should initialize correctly when a Hash is passed as the argument" do 
       @config = Derecho::Config.new(hash)
       expect(@config).to eq(hash)
+    end
+    
+    it "should raise error when no file is found" do
+      File.delete(path) if File.exists?(path)   
+      lambda { Derecho::Config.new(path) }.should raise_error(Derecho::ConfigFileNotFoundError)
+    end
+    
+    it "should be accessible like a Hash" do
+      expect(@config['test']['a']).to eq('a_test')
+      @config['test']['a'] = 'testing'
+      expect(@config['test']['a']).to eq('testing')
     end
   end
 
