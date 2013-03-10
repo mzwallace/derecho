@@ -10,13 +10,13 @@ module Derecho
 
     class Main < Thor
 
-      desc 'config [TASK] [ARGS]', 'Manage config settings'
+      desc 'config', 'Manage config settings'
       subcommand 'config', Derecho::CLI::Config
 
-      desc 'lb [TASK] [ARGS]', 'Manage cloud load balancers'
+      desc 'lb', 'Manage cloud load balancers'
       subcommand 'lb', Derecho::CLI::Lb
 
-      desc 'srv [TASK] [ARGS]', 'Manage cloud servers'
+      desc 'srv', 'Manage cloud servers'
       subcommand 'srv', Derecho::CLI::Srv
 
     end

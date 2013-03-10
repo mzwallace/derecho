@@ -13,7 +13,7 @@ module Derecho
         @file_error = Proc.new { |file| 'Could not locate file %s' % file }
       end
 
-      desc 'show [ACCOUNT] [KEY]', 'List all config settings'
+      desc 'show [account]? [key]?', 'List all config settings'
       def show(account = nil, key = nil)
         load_from_file unless @settings
 
@@ -38,7 +38,7 @@ module Derecho
         end
       end
 
-      desc 'set [account] [key] [value]', 'Set a config value'
+      desc 'set [account] [key]? [value]?', 'Set a config value'
       def set(account, key, value = nil)
         load_from_file unless @settings
         if value.nil? then @settings[account] = key else @settings[account][key] = value end

@@ -3,9 +3,18 @@ require 'derecho/cli/config'
 
 describe Derecho do
 
+  let(:hash) { {'test' => {'a' => 'a_test', 'b' => 'b_test', 'c' => 'c_test'}} } 
+  let(:path) { 'spec/tmp/.test' }
+  
   before :each do
+    yaml = hash.to_yaml.sub('---', '')
+    File.open(File.expand_path(path), 'w+') {|f| f.write(yaml) }
     @config = Derecho::CLI::Config.new
-    @config.file_path = 'spec/.test'
+    @config.file_path = 'spec/tmp/.test'
+  end
+  
+  after :each do 
+    File.delete(path)
   end
 
   describe "::CLI::Config" do
@@ -17,7 +26,7 @@ describe Derecho do
     it "should error if no config file is found" do
       @config.file_path = "nowayinhell"
       output = capture(:stdout) { @config.load }
-      expect(output.chomp).to eq(@config.file_error.call(File.expand_path(@config.file_path)))
+      expect(output.chomp.chomp).to eq(@config.file_error.call(File.expand_path(@config.file_path)))
     end
 
     it "is able to load the config from a file" do
