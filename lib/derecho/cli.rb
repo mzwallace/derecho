@@ -12,14 +12,9 @@ module Derecho
       
       def initialize(args=[], options={}, config={})
         super
-        
-        unless Derecho::Config.new.file_exists
-          if yes?('There is no .derecho file in this directory, would you like to setup one now?')
-            Derecho::CLI::Config.new.setup
-          end
-        end
+        Derecho::CLI::Config.new.check
       end
-      
+
       desc 'config', 'Manage config settings'
       subcommand 'config', Derecho::CLI::Config
 
@@ -28,7 +23,28 @@ module Derecho
 
       desc 'srv', 'Manage cloud servers'
       subcommand 'srv', Derecho::CLI::Srv
-
+      
+      map %w(-v --version) => :version
+      desc 'version', 'Show version number'
+      def version
+        puts "v#{Derecho::VERSION}"
+      end
+      
+      desc "help", "List all available options"
+      def help(task = nil, subcommand = false)
+        task ? self.class.task_help(shell, task) : self.class.help(shell, subcommand)
+      end 
+      
+      class << self
+        protected
+          def subcommand_help(cmd)
+            desc "help", "List all available options"
+            class_eval <<-RUBY
+              def help(task = nil, subcommand = true); super; end
+            RUBY
+          end
+      end
+      
     end
 
   end

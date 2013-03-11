@@ -69,6 +69,12 @@ module Derecho
       
       no_tasks do
         
+        def check
+          if yes?('There is no .derecho file in this directory, would you like to setup one now?')
+            Derecho::CLI::Config.new.setup
+          end
+        end
+        
         # THANK YOU RAILS!
         
         def deep_merge(hash, other_hash)

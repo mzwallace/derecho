@@ -1,4 +1,4 @@
-require 'helper'
+require 'spec_helper'
 require 'derecho/config'
 
 describe Derecho do
