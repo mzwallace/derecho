@@ -1,6 +1,6 @@
 class Derecho
   module Sub
-    class Srv < Thor
+    class Srv < Derecho::Thor
       
       desc 'list', 'List all cloud servers'
       def list

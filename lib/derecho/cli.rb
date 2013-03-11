@@ -1,10 +1,10 @@
 $:.unshift "#{File.dirname(__FILE__)}/../../lib"
 require 'derecho'
+require 'derecho/thor'
 require 'derecho/sub'
 require 'derecho/sub/lb'
 require 'derecho/sub/srv'
 require 'derecho/sub/config'
-require 'derecho/thor'
 
 class Derecho
   class CLI < Derecho::Thor

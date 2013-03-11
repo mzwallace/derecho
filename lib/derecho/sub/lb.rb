@@ -1,6 +1,6 @@
 class Derecho
   module Sub
-    class Lb < Thor
+    class Lb < Derecho::Thor
 
       desc 'list', 'List all cloud load balancers'
       def list
