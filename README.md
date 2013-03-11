@@ -5,7 +5,7 @@ Cloud automation help for the Rackspace Cloud + Chef + Beanstalkapp.  <a href="h
 ## <b><i>The Big Idea</i></b>
 Heroku ease of use + robust Chef cookbooks + solid hosting on Rackspace
 ```
-$ derecho scale test 4 # scale the test role type to 4 nodes
+$ derecho scale test=4 # scale the test role type to 4 nodes
 ```
 <pre>
 $ cat .derecho
