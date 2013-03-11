@@ -1,6 +1,6 @@
 class Derecho
   module Sub
-    class Config < Thor
+    class Config < Derecho::Thor
 
       attr_accessor :config
       

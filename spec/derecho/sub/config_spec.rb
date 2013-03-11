@@ -1,6 +1,5 @@
 require 'spec_helper'
-require 'derecho/sub'
-require 'derecho/sub/config'
+require 'derecho/cli'
 
 describe Derecho do
 
