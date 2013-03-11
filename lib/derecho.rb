@@ -1,9 +1,9 @@
 $:.unshift "#{File.dirname(__FILE__)}/../lib"
 require 'fog'
-require 'thor'
+require 'derecho/thor'
 
 class Derecho
-  class CLI < Thor; end
+  class CLI < Derecho::Thor; end
 end
 
 require 'derecho/version'

@@ -27,10 +27,5 @@ class Derecho
       puts "v#{Derecho::VERSION}"
     end
       
-    desc "help [command]", "List all available options"
-    def help(task = nil, subcommand = false)
-      task ? self.class.task_help(shell, task) : self.class.help(shell, subcommand)
-    end 
-      
   end
 end
