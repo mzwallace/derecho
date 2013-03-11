@@ -4,6 +4,7 @@ class Derecho
 
       desc 'list', 'List all cloud load balancers'
       def list
+        Derecho::Sub.config_check
         @config = Derecho::Config.new
         @config.read
         rackspace = @config['accounts']['rackspace']

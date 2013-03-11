@@ -1,16 +1,13 @@
 $:.unshift "#{File.dirname(__FILE__)}/../../lib"
 require 'derecho'
+require 'derecho/sub'
 require 'derecho/sub/lb'
 require 'derecho/sub/srv'
 require 'derecho/sub/config'
+require 'derecho/thor'
 
 class Derecho
-  class CLI
-      
-    def initialize(args=[], options={}, config={})
-      super
-      Derecho::Sub::Config.new.check
-    end
+  class CLI < Derecho::Thor
 
     desc 'config', 'Manage config settings'
     subcommand 'config', Derecho::Sub::Config

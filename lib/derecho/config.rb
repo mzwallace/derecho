@@ -49,7 +49,7 @@ class Derecho
     
     # Array style accessors - set
     def []=(key, value)
-      settings[key] = value
+      @settings[key] = value
     end
   
   end

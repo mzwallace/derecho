@@ -3,15 +3,15 @@ class Derecho
     class Config < Thor
 
       attr_accessor :config
-
+      
       def initialize(args=[], options={}, config={})
         super
-        
         @config = Derecho::Config.new
       end
-
+      
       desc 'show [*keys]', 'Print groups or specific config settings'
       def show(*keys)
+        check
         @config.read
         
         puts ''
@@ -29,6 +29,7 @@ class Derecho
 
       desc 'set [*keys] [value]', 'Set a config value (i.e. set accounts rackspace username my_username)'
       def set(*keys)
+        check
         @config.read
         
         # figure out the hash from the array input
@@ -68,8 +69,13 @@ class Derecho
       no_tasks do
         
         def check
-          if yes?('There is no .derecho file in this directory, would you like to setup one now?')
-            Derecho::CLI::Config.new.setup
+          unless @config.file_exists
+            if yes?('There is no .derecho file in this directory, would you like to setup one now?')
+              setup
+            else
+              say('To continue you must setup a .derecho file in this directory')
+              exit
+            end
           end
         end
         
