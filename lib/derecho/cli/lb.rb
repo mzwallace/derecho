@@ -6,8 +6,9 @@ module Derecho
 
       desc 'list', 'List all cloud load balancers'
       def list
-        @config = Derecho::CLI::Config.new
-        rackspace = @config.get('rackspace')
+        @config = Derecho::Config.new
+        @config.read
+        rackspace = @config['accounts']['rackspace']
 
         lb = Fog::Rackspace::LoadBalancers.new(
           :rackspace_api_key => rackspace['api_key'],

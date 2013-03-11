@@ -6,8 +6,9 @@ module Derecho
 
       desc 'list', 'List all cloud servers'
       def list
-        @config = Derecho::CLI::Config.new
-        rackspace = @config.get('rackspace')
+        @config = Derecho::Config.new
+        @config.read
+        rackspace = @config['accounts']['rackspace']
 
         cs = Fog::Compute::RackspaceV2.new(
           :rackspace_username => rackspace['username'],
