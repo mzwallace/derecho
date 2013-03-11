@@ -1,7 +1,5 @@
-module Derecho
-
-  module CLI
-
+class Derecho
+  module Sub
     class Lb < Thor
 
       desc 'list', 'List all cloud load balancers'
@@ -25,9 +23,7 @@ module Derecho
           puts ''
         end
       end
-
+      
     end
-
   end
-
 end

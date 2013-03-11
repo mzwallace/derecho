@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'derecho/cli/config'
+require 'derecho/sub/config'
 
 describe Derecho do
 
@@ -16,7 +16,7 @@ describe Derecho do
     File.open(File.expand_path(path), 'w+') {|f| f.write(yaml) }
     
     # create an instance of the config
-    @config = Derecho::CLI::Config.new
+    @config = Derecho::Sub::Config.new
     @config.config.path = path;
   end
   
@@ -30,10 +30,10 @@ describe Derecho do
     
   end
 
-  describe "::CLI::Config" do
+  describe "::Sub::Config" do
 
-    it "should be an instance of Derecho::CLI::Config" do
-      @config.should be_an_instance_of Derecho::CLI::Config
+    it "should be an instance of Derecho::Sub::Config" do
+      @config.should be_an_instance_of Derecho::Sub::Config
     end
 
     it "should be able to show all settings" do

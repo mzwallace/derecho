@@ -1,7 +1,5 @@
-module Derecho
-
-  module CLI
-
+class Derecho
+  module Sub
     class Srv < Thor
 
       desc 'list', 'List all cloud servers'
@@ -28,7 +26,5 @@ module Derecho
       end
 
     end
-
   end
-
 end

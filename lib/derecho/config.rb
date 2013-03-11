@@ -1,8 +1,7 @@
-$:.unshift(File.join(File.dirname(__FILE__), "../..", "lib"))
+$:.unshift "#{File.dirname(__FILE__)}/../../lib"
 require 'derecho'
 
-module Derecho
-  
+class Derecho
   class Config
     
     @@default_path = "#{Dir.pwd}/.derecho"
@@ -43,11 +42,15 @@ module Derecho
       File.exists?(File.expand_path(@path))
     end
     
-    # allows you to access the instance of this class like an array but without extending Hash or Array
+    # Array style accessors - get
     def [](key)
       @settings[key]
     end
+    
+    # Array style accessors - set
+    def []=(key, value)
+      settings[key] = value
+    end
   
   end
-  
 end

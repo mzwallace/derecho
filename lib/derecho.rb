@@ -1,8 +1,10 @@
-require 'thor'
+$:.unshift "#{File.dirname(__FILE__)}/../lib"
 require 'fog'
+require 'thor'
 
-$:.unshift(File.join(File.dirname(__FILE__), "..", "lib"))
+class Derecho
+  class CLI < Thor; end
+end
 
-module Derecho; end
 require 'derecho/version'
 require 'derecho/config'

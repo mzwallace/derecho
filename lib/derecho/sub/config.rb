@@ -1,7 +1,5 @@
-module Derecho
-
-  module CLI
-
+class Derecho
+  module Sub
     class Config < Thor
 
       attr_accessor :config
@@ -12,7 +10,7 @@ module Derecho
         @config = Derecho::Config.new
       end
 
-      desc 'show [*keys]', 'List all config settings'
+      desc 'show [*keys]', 'Print groups or specific config settings'
       def show(*keys)
         @config.read
         
@@ -94,7 +92,5 @@ module Derecho
       end
 
     end
-
   end
-
 end
