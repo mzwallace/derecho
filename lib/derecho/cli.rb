@@ -9,7 +9,17 @@ module Derecho
   module CLI
 
     class Main < Thor
-
+      
+      def initialize(args=[], options={}, config={})
+        super
+        
+        unless Derecho::Config.new.file_exists
+          if yes?('There is no .derecho file in this directory, would you like to setup one now?')
+            Derecho::CLI::Config.new.setup
+          end
+        end
+      end
+      
       desc 'config', 'Manage config settings'
       subcommand 'config', Derecho::CLI::Config
 

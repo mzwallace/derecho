@@ -29,7 +29,7 @@ module Derecho
         puts ''
       end
 
-      desc 'set', 'Set a config value (i.e. set accounts rackspace username my_username)'
+      desc 'set [*keys] [value]', 'Set a config value (i.e. set accounts rackspace username my_username)'
       def set(*keys)
         @config.read
         
@@ -45,6 +45,26 @@ module Derecho
         # output what they have changed
         puts hash.to_yaml.sub('---', '')
         puts ''
+      end
+      
+      desc 'setup', 'This will create / overwrite your .derecho file'
+      def setup
+        rackspace_username = ask 'Rackspace Username?'
+        rackspace_api_key  = ask 'Rackspace API Key?'
+        rackspace_region   = ask 'Rackspace Region?'
+        
+        @config.settings = { 
+          'accounts' => {
+            'rackspace' => {
+              'username' => rackspace_username,
+              'api_key' => rackspace_api_key,
+              'region' => rackspace_region
+            }
+          }
+        }
+        
+        @config.write
+        show
       end
       
       no_tasks do

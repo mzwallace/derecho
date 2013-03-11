@@ -17,6 +17,7 @@ module Derecho
       
       # if config file path is nil set it to the default
       @path ||= @@default_path
+      
       @settings ||= {}
     end
     
@@ -38,7 +39,11 @@ module Derecho
       file.close
     end
     
-    # allows you to access the instance of this class like an array but with extending Hash or Array
+    def file_exists
+      File.exists?(File.expand_path(@path))
+    end
+    
+    # allows you to access the instance of this class like an array but without extending Hash or Array
     def [](key)
       @settings[key]
     end
