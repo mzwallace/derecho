@@ -151,19 +151,15 @@ Or install it yourself as:
 
     $ gem install derecho
 
-Config File - The .derecho file needs to be in ~/ or your current working directory.
+Config File - The .derecho file needs to be in your current working directory.
 <pre>
-$ cat ~/.derecho    
+$ cat .derecho    
 
-rackspace:
-  username: my_rackspace_username
-  api_key:  1234567890
-  region:   ord
-
-beanstalkap:
-  domain:   my_beanstalk_subdomain
-  login:    my_beanstalk_login
-  password: my_beanstalk_password
+accounts:
+  rackspace:
+    username: my_rackspace_username
+    api_key:  1234567890
+    region:   ord
 </pre>
 
 Check your config with:
