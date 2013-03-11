@@ -7,6 +7,10 @@ describe Derecho do
   let(:path) { 'spec/tmp/.test' }
   
   before :each do
+    # create the tmp dir
+    dir = File.dirname(path)
+    Dir.mkdir(dir) unless Dir.exists?(dir)
+    
     # create the test yaml file
     yaml = hash.to_yaml.sub('---', '')
     File.open(File.expand_path(path), 'w+') {|f| f.write(yaml) }
@@ -17,8 +21,13 @@ describe Derecho do
   end
   
   after :each do 
-    # delete the test yaml file if it exists
+    # delete the .test file
     File.delete(path) if File.exists?(path)
+    
+    # delete the tmp dir
+    dir = File.dirname(path)
+    Dir::delete(dir) if Dir.exists?(dir)
+    
   end
 
   describe "::CLI::Config" do

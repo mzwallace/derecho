@@ -7,15 +7,23 @@ describe Derecho do
   let(:path) { 'spec/tmp/.test' }
 
   before :each do
-    yaml = hash.to_yaml.sub('---', '')
+    # create tmp dir
     dir = File.dirname(path)
     Dir.mkdir(dir) unless Dir.exists?(dir)
+    
+    # create .test file
+    yaml = hash.to_yaml.sub('---', '')
     File.open(path, 'w+') {|f| f.write(yaml) }
+    
+    # create a new instance of Config to work with
     @config = Derecho::Config.new(hash)
   end
 
   after :each do
+    # delete the .test file
     File.delete(path) if File.exists?(path)
+    
+    # delete the tmp dir
     dir = File.dirname(path)
     Dir::delete(dir) if Dir.exists?(dir)
   end
