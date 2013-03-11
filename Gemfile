@@ -6,3 +6,4 @@ gemspec
 gem 'guard'
 gem 'guard-rspec'
 gem 'guard-bundler'
+gem 'rb-fsevent', '~> 0.9'
