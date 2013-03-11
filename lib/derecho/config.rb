@@ -1,41 +1,46 @@
+$:.unshift(File.join(File.dirname(__FILE__), "../..", "lib"))
+require 'derecho'
+
 module Derecho
   
-  class ConfigFileNotFoundError < Error; end
-  
-  # an instance of this class can be accessed like a hash for set and get 
-  class Config < Hash
+  class Config
+    
+    @@default_path = "#{Dir.pwd}/.derecho"
     
     attr_accessor :path, :settings
     
     def initialize(config = nil)
-      # if argument is not nil load it from a hash or config file location
+      # if argument is not nil load it from a hash or config file
       unless config.nil?
-        self.merge!(config.is_a?(Hash) ? config : read(config))
+        config.is_a?(Hash) ? @settings = config : read(config)
       end
       
       # if config file path is nil set it to the default
-      @path ||= '#{Dir.pwd}/.derecho'
+      @path ||= @@default_path
+      @settings ||= {}
     end
     
     def read(path=nil)
+      # if no argument then read and set path
+      path ||= @path
+      
+      @path = File.expand_path(path)
+      @settings = YAML.load_file(@path)
+    end
+    
+    def write(path=nil)
       # if no argument then read the default path
       path ||= @path
       
-      file = File.expand_path(path)
-      
-      if File.exists?(file)
-        YAML.load_file(file)
-        @path = path
-      else
-        raise ConfigFileNotFoundError
-      end
-    end
-    
-    def write
       # overwrite current file
       file = File.open(@path, 'w+')
-      file.puts self.to_yaml.sub('---', '')
+      file.puts @settings.to_yaml.sub('---', '')
       file.close
+    end
+    
+    # allows you to access the instance of this class like an array but with extending Hash or Array
+    def [](key)
+      @settings[key]
     end
   
   end

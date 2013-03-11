@@ -1,9 +1,8 @@
-require 'derecho/version'
 require 'thor'
 require 'fog'
 
-module Derecho
-  
-  class Error < RuntimeError; end
-  
-end
+$:.unshift(File.join(File.dirname(__FILE__), "..", "lib"))
+
+module Derecho; end
+require 'derecho/version'
+require 'derecho/config'

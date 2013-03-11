@@ -4,76 +4,67 @@ module Derecho
 
     class Config < Thor
 
-      attr_accessor :settings, :settings_path, :file_path, :file_error
+      attr_accessor :config
 
       def initialize(args=[], options={}, config={})
         super
-
-        @file_path  = '~/.derecho'
-        @file_error = Proc.new { |file| 'Could not locate file %s' % file }
+        
+        @config = Derecho::Config.new
       end
 
-      desc 'show [account]? [key]?', 'List all config settings'
-      def show(account = nil, key = nil)
-        load_from_file unless @settings
-
-        puts "Read from: #{@settings_path}"
+      desc 'show [*keys]', 'List all config settings'
+      def show(*keys)
+        @config.read
+        
         puts ''
-
-        if account.nil?
-          @settings.each do |name, account|
-            puts "#{name}:"
-            account.each do |key, value|
-              puts "  #{key}:\t#{value}"
-            end
-            puts ''
-          end
-          puts ''
+        puts "Read from: #{@config.path}"
+        
+        if keys.any?
+          settings = keys.inject(@config.settings, &:fetch)
+          puts settings.to_yaml.sub('---', '')
         else
-          if key.nil?
-            puts @settings[account]
-          else
-            puts @settings[account][key]
-          end
+          puts @config.settings.to_yaml.sub('---', '')
         end
+        
+        puts ''
       end
 
-      desc 'set [account] [key]? [value]?', 'Set a config value'
-      def set(account, key, value = nil)
-        load_from_file unless @settings
-        if value.nil? then @settings[account] = key else @settings[account][key] = value end
+      desc 'set', 'Set a config value (i.e. set accounts rackspace username my_username)'
+      def set(*keys)
+        @config.read
+        
+        # figure out the hash from the array input
+        hash = keys.reverse.inject { |value, key| { key => value } }
+        
+        # deep merge it with current config
+        deep_merge!(@config.settings, hash)
+        
+        # write to file
+        @config.write
+        
+        # output what they have changed
+        puts hash.to_yaml.sub('---', '')
+        puts ''
       end
-
+      
       no_tasks do
-
-        def get(account, key = nil)
-          load_from_file unless @settings
-          if key.nil? then @settings[account] else @settings[account][key] end
+        
+        # THANK YOU RAILS!
+        
+        def deep_merge(hash, other_hash)
+          hash = hash.clone
+          deep_merge!(hash, other_hash)
         end
-
-        #desc 'load [path]', 'Load the config file'
-        def load(path = @file_path)
-          begin
-            load_from_file(path)
-            puts "Config loaded successfully."
-            puts ""
-          rescue
-            puts @file_error.call(File.expand_path(path))
-            puts ""
+        
+        def deep_merge!(hash, other_hash)
+          other_hash.each_pair do |k,v|
+            tv = hash[k]
+            hash[k] = tv.is_a?(Hash) && v.is_a?(Hash) ? deep_merge(tv, v) : v
           end
+          
+          hash
         end
-
-        def load_from_file(path = @file_path)
-          path   = File.expand_path(path)
-          name   = File.basename(path)
-          config = YAML.load_file(path) if File.exists?(path)
-          config = YAML.load_file(name) if File.exists?(name) and !config
-
-          raise @file_error.call(path) unless config
-          @settings = config
-          @settings_path = path
-        end
-
+      
       end
 
     end
