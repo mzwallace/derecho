@@ -7,14 +7,18 @@ describe Derecho do
   let(:path) { 'spec/tmp/.test' }
   
   before :each do
+    # create the test yaml file
     yaml = hash.to_yaml.sub('---', '')
     File.open(File.expand_path(path), 'w+') {|f| f.write(yaml) }
+    
+    # create an instance of the config
     @config = Derecho::CLI::Config.new
-    @config.file_path = 'spec/tmp/.test'
+    @config.config.path = path;
   end
   
   after :each do 
-    File.delete(path)
+    # delete the test yaml file if it exists
+    File.delete(path) if File.exists?(path)
   end
 
   describe "::CLI::Config" do
@@ -23,25 +27,16 @@ describe Derecho do
       @config.should be_an_instance_of Derecho::CLI::Config
     end
 
-    it "should error if no config file is found" do
-      @config.file_path = "nowayinhell"
-      output = capture(:stdout) { @config.load }
-      expect(output.chomp.chomp).to eq(@config.file_error.call(File.expand_path(@config.file_path)))
+    it "should be able to show all settings" do
+      output = capture(:stdout) { @config.show }
+      expect(output).to eq("\nRead from: #{File.expand_path(path)}\n" + hash.to_yaml.sub('---', '') + "\n")
     end
-
-    it "is able to load the config from a file" do
-      @config.load_from_file
-      expect(@config.settings['test']['a']).to eq('a_test')
-    end
-
-    it "should be able to get a specifc config setting" do
-      expect(@config.get('test', 'a')).to eq('a_test')
-    end
-
+=begin
     it "should be able to get a group of config settings" do
-      expect(@config.get('test')['a']).to eq('a_test')
+      output = capture(:stdout) { @config.show(['test', 'a']) }
+      expect(output).to eq("\nRead from: #{File.expand_path(path)}\n" + hash.to_yaml.sub('---', '') + "\n")
     end
-
+    
     it "should be able to set a specific config setting" do
       @config.set('test', 'a', 'changed')
       expect(@config.settings['test']['a']).to eq('changed')
@@ -51,7 +46,7 @@ describe Derecho do
       @config.set('test', {'a' => 'changed'})
       expect(@config.settings['test']['a']).to eq('changed')
     end
-
+=end
   end
 
 end
