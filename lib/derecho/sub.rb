@@ -9,3 +9,5 @@ class Derecho
   
   end
 end
+
+Dir.glob("#{Dir.pwd}/lib/derecho/sub/*", &method(:require))

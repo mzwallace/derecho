@@ -10,14 +10,16 @@ class Derecho
         @settings = @config['accounts']['rackspace']
       end
       
-      def get_servers
-        cs = Fog::Compute::RackspaceV2.new(
+      def get_instance
+        @srv = @srv || Fog::Compute::RackspaceV2.new(
           :rackspace_username => @settings['username'],
           :rackspace_api_key => @settings['api_key'],
           :rackspace_endpoint => "https://#{@settings['region']}#{@@api_endpoint}"
         )
-
-        cs.list_servers.body['servers']
+      end
+      
+      def get_servers
+        get_instance.list_servers.body['servers']
       end
       
     end

@@ -1,0 +1,15 @@
+Name   <%=@name%> <%=@id%>
+Flavor <%=@flavor['id']%>
+Image  <%=@image['id']%>
+IP(s)
+<% @addresses['public'].each do |ip| %>
+  <%=ip['addr']%> (public)
+<% end %>
+<% @addresses['private'].each do |ip| %>
+  <%=ip['addr']%> (private)
+<% end %>
+<% if @status.downcase.strip == 'active' %>
+Status <%=@status%>
+<% else %>
+Status <%=@status%> <% if defined?(@progress).nil? %> <%=@progress%>% <% end %>
+<% end %>

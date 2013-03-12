@@ -2,7 +2,7 @@ $:.unshift "#{File.dirname(__FILE__)}/../../lib"
 require 'derecho'
 require 'derecho/thor'
 require 'derecho/sub'
-Dir.glob("#{Dir.pwd}/lib/derecho/sub/*", &method(:require))
+require 'derecho/view'
 
 class Derecho
   class CLI < Derecho::Thor

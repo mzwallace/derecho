@@ -6,12 +6,9 @@ class Derecho
       def list
         Derecho::Sub.config_check
         lb = Derecho::Rackspace::Load_Balancer.new
+        puts ''
         lb.get_load_balancers.each do |lb|
-          puts "Name    #{lb['name']} #{lb['id']}"
-          puts "Port    #{lb['port']}"
-          puts 'IP(s)   ' + lb['virtualIps'].map { |ip| ip['address'] }.join(',')
-          puts "Status  #{lb['status']}"
-          puts "Node(s) #{lb['nodeCount']}"
+          puts Derecho::View.compile lb, 'lb'
           puts ''
         end
       end
