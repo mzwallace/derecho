@@ -176,12 +176,8 @@ $ derecho config show
 5. Once a server is spun up the server is added to a beanstalkapp deployment environment and the same revision that lives on other servers would then be deployed to our new server.
 6. Once a server is spun up a ping health check monitor would be added.
 7. The server will then be added to the load balancer.
-8. More to follow...
-
-### Wishlist
-
-1. Ability to spin up chef server with one command.
-2. A subcommand dedicated to building out entire computer networks from a config file.
+8. Ability to spin up chef server with one command.
+9. A subcommand dedicated to building out entire computer networks from a config file.
 
 
 ## Help! 
