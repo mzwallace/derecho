@@ -183,9 +183,6 @@ $ derecho config show
 1. Ability to spin up chef server with one command.
 2. A subcommand dedicated to building out entire computer networks from a config file.
 
-### Todo
-
-1. Refactor CLI to move all Derecho functionality out of Derecho::CLI and into Derecho so it can be used programmatically.
 
 ## Help! 
 
