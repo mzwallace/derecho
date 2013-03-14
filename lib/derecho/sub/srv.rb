@@ -7,7 +7,7 @@ class Derecho
         Derecho::Sub.config_check
         cs = Derecho::Rackspace::Server.new
         puts ''
-        cs.get_servers.each do |cs|
+        cs.get_all.each do |cs|
           puts Derecho::View.compile cs, 'srv'
           puts ''
         end
