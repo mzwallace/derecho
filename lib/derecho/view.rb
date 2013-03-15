@@ -16,7 +16,7 @@ class Derecho
     module_function
     
     def compile(hash, view)
-      path = "#{Dir.pwd}/lib/derecho/views/#{view}.erb"
+      path = "#{File.dirname(__FILE__)}/../../lib/derecho/views/#{view}.erb"
       
       if File.exists?(path)
         template = ERB.new(File.read(path), nil, '%<>')

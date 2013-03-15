@@ -4,4 +4,4 @@ class Derecho
   module Rackspace; end
 end
 
-Dir.glob("#{Dir.pwd}/lib/derecho/rackspace/*", &method(:require))
+Dir.glob("#{File.dirname(__FILE__)}/../../lib/derecho/rackspace/*", &method(:require))

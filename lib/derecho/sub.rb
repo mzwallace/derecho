@@ -10,4 +10,4 @@ class Derecho
   end
 end
 
-Dir.glob("#{Dir.pwd}/lib/derecho/sub/*", &method(:require))
+Dir.glob("#{File.dirname(__FILE__)}/../../lib/derecho/sub/*", &method(:require))
