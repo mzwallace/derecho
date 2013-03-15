@@ -48,9 +48,15 @@ class Derecho
       
       desc 'setup', 'This will create / overwrite your .derecho file'
       def setup
-        rackspace_username = ask 'Rackspace Username?'
-        rackspace_api_key  = ask 'Rackspace API Key?'
-        rackspace_region   = ask 'Rackspace Region?'
+        if File.exists?(File.expand_path("#{Dir.pwd}/.derecho"))
+          unless yes? 'You already have a .derecho file in this directory, do you want to overwrite it?'
+            exit
+          end
+        end
+          
+        rackspace_username = ask 'Enter Rackspace Username:'
+        rackspace_api_key  = ask 'Enter Rackspace API Key:'
+        rackspace_region   = ask 'Enter Rackspace Region:'
         
         @config.settings = { 
           'accounts' => {
@@ -70,10 +76,10 @@ class Derecho
         
         def check
           unless @config.file_exists
-            if yes?('There is no .derecho file in this directory, would you like to setup one now?')
+            if yes? 'There is no .derecho file in this directory, would you like to setup one now?'
               setup
             else
-              say('To continue you must setup a .derecho file in this directory')
+              say 'To continue you must setup a .derecho file in this directory'
               exit
             end
           end
