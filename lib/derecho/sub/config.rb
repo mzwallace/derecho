@@ -53,11 +53,11 @@ class Derecho
             exit
           end
         end
-          
+        
         rackspace_username = ask 'Enter Rackspace Username:'
         rackspace_api_key  = ask 'Enter Rackspace API Key:'
         rackspace_region   = ask 'Enter Rackspace Region:'
-        
+                
         @config.settings = { 
           'accounts' => {
             'rackspace' => {
