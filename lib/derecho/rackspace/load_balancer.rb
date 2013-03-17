@@ -44,33 +44,62 @@ class Derecho
       end
       
       def get_nodes lb_id
-        nodes = @service.nodes.new
-        nodes.load_balancer = get lb_id
-        nodes.all
+        lb = get lb_id
+        lb.nodes.all
       end
       
-      def get_node lb_id, node_id
-        nodes = @service.nodes.new
-        nodes.load_balancer = get lb_id 
-        
-        # possible exception to catch
-        nodes.get node_id
+      def get_node lb_id, server_id
+        lb = get lb_id 
+        lb.nodes.select { |node| puts node }
       end
       
-      def add_node lb_id, node_id, address, port = 80, condition = 'ENABLED'
-        # ignore the request if it's already attached
-        unless get_nodes(lb_id).any? {|n| n.id == node_id }
-          node = @service.node.new
-          node.load_balancer = get(lb_id)
-          node.address = address
-          node.port = port
-          node.condition = condition
-          node.save
+      def server_exists? server_id
+        server = Derecho::Rackspace::Server.new.get server_id
+        !server.nil?
+      end
+      
+      def is_attached? lb_id, server_id
+        if server_exists? server_id
+          server = Derecho::Rackspace::Server.new.get server_id
+          get_nodes(lb_id).any? do |node| 
+            node.address == server.private_ip_address
+          end
+        else
+          false
         end
       end
       
-      def remove_node lb_id, node_id
-        get_node(lb_id, node_id).destroy 
+      def attach_node lb_id, server_id, port = nil, condition = 'ENABLED'
+        if server_exists? server_id
+          # ignore the request if it's already attached
+          unless is_attached? lb_id, server_id
+            #node = @service.node.new
+            #node.load_balancer = get lb_id 
+            #node.address = address
+            #node.port = port || node.load_balancer.port
+            #node.condition = condition
+            #node.save
+          else
+            # replace with raise
+            puts 'Server already attached!'
+          end
+        else
+          # replace with raise
+          puts 'Server does not exist!'
+        end
+      end
+      
+      def detach_node lb_id, server_id
+        server = Derecho::Rackspace::Server.new.get server_id
+        node = get_node lb_id, node_id
+        
+        if node and node.destroy
+          # replace with raise
+          puts 'Server removed from load balancer'
+        else 
+          # replace with raise
+          puts 'Server was not found on the specified load balancer'
+        end
       end
     end
   end

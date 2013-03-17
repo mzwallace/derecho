@@ -26,7 +26,7 @@ class Derecho
           say 'Creating Load Balancer'
           lb.wait_for(600, 5) do 
             print '.'
-            say 'complete' if ready?
+            print 'complete' if ready?
             ready?
           end
         end
@@ -40,11 +40,23 @@ class Derecho
           say 'Deleting Load Balancer'
           lb.wait_for(600, 5) do 
             print '.' 
-            say 'complete' if ready?
+            print 'complete' if ready?
             ready?
           end
-          
         end
+        
+        desc 'attach [lb-id] [server-id]', 'Attach a server to a load balancer'
+        def attach lb_id, server_id
+          lb = Derecho::Rackspace::Load_Balancer.new
+          lb.attach_node lb_id, server_id
+        end
+        
+        desc 'detach [lb-id] [server-id]', 'Detach a server from a load balancer'
+        def detach lb_id, server_id
+          lb = Derecho::Rackspace::Load_Balancer.new
+          lb.detach_node lb_id, server_id
+        end
+        
       end
     end
   end
