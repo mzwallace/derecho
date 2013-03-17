@@ -4,20 +4,16 @@ require 'derecho'
 class Derecho
   class Config
     
-    @@default_path = "#{Dir.pwd}/.derecho"
-    
     attr_accessor :path, :settings
     
     def initialize(config = nil)
+      @path     = "#{Dir.pwd}/.derecho"
+      @settings = {}
+      
       # if argument is not nil load it from a hash or config file
       unless config.nil?
         config.is_a?(Hash) ? @settings = config : read(config)
       end
-      
-      # if config file path is nil set it to the default
-      @path ||= @@default_path
-      
-      @settings ||= {}
     end
     
     def read(path=nil)

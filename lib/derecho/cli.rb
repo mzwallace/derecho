@@ -26,8 +26,9 @@ class Derecho
       
     desc 'init', 'Create a .derecho file in this directory'
     def init
-      if File.exists? File.expand_path Derecho::Config.default_path
-        say 'You have already initialized Derecho in this directory'
+      if File.exists? File.expand_path Derecho::Config.new.path
+        say 'You have already initialized Derecho in this directory.'
+        say ''
         Derecho::CLI::Subcommand::Config.new.show
       else
         Derecho::CLI::Subcommand::Config.new.setup
