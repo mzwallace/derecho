@@ -185,8 +185,8 @@ $ derecho config show
 ## Roadmap
 
 1. Chef solo or Chef server? Or both???
-2. Easy configuration using derecho config <b><i>In Progress</i></b>
-3. Ability to add / remove servers to / from load balancers
+2. ~~Easy configuration using derecho config~~
+3. Ability to add / remove servers to / from load balancers <b><i>In Progress</i></b>
 4. Ability to create servers like with chef's knife rackspace command.
 5. Once a server is spun up the server is added to a beanstalkapp deployment environment and the same revision that lives on other servers would then be deployed to our new server.
 6. Once a server is spun up a ping health check monitor would be added.
