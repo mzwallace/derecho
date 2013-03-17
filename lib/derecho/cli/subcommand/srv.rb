@@ -6,10 +6,8 @@ class Derecho
       def list
         Derecho::Sub.config_check
         cs = Derecho::Rackspace::Server.new
-        puts ''
         cs.get_all.each do |cs|
-          puts Derecho::View.compile cs, 'srv'
-          puts ''
+          say Derecho::View.compile cs, 'srv'
         end
       end
 

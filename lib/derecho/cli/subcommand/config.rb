@@ -14,17 +14,14 @@ class Derecho
         check
         @config.read
         
-        puts ''
-        puts "Read from: #{@config.path}"
+        say "Read from: #{@config.path}"
         
         if keys.any?
           settings = keys.inject(@config.settings, &:fetch)
-          puts settings.to_yaml.sub('---', '')
+          say settings.to_yaml.sub('---', '')
         else
-          puts @config.settings.to_yaml.sub('---', '')
+          say @config.settings.to_yaml.sub('---', '')
         end
-        
-        puts ''
       end
 
       desc 'set [*keys] [value]', 'Set a config value (i.e. set accounts rackspace username my_username)'
@@ -42,8 +39,7 @@ class Derecho
         @config.write
         
         # output what they have changed
-        puts hash.to_yaml.sub('---', '')
-        puts ''
+        say hash.to_yaml.sub('---', '')
       end
       
       desc 'setup', 'This will create / overwrite your .derecho file'
