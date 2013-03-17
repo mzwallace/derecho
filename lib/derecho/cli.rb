@@ -1,8 +1,8 @@
 $:.unshift "#{File.dirname(__FILE__)}/../../lib"
 require 'derecho'
 require 'derecho/thor'
-require 'derecho/sub'
-require 'derecho/view'
+require 'derecho/cli/subcommand'
+require 'derecho/cli/view'
 
 class Derecho
   class CLI < Derecho::Thor
@@ -16,21 +16,21 @@ class Derecho
     end
         
     desc 'config', 'Manage config settings'
-    subcommand 'config', Derecho::Sub::Config
+    subcommand 'config', Derecho::CLI::Subcommand::Config
 
     desc 'lb', 'Manage cloud load balancers'
-    subcommand 'lb', Derecho::Sub::Lb
+    subcommand 'lb', Derecho::CLI::Subcommand::Lb
 
     desc 'srv', 'Manage cloud servers'
-    subcommand 'srv', Derecho::Sub::Srv
+    subcommand 'srv', Derecho::CLI::Subcommand::Srv
       
     desc 'init', 'Create a .derecho file in this directory'
     def init
-      if File.exists? File.expand_path "#{Dir.pwd}/.derecho"
+      if File.exists? File.expand_path Derecho::Config.default_path
         say 'You have already initialized Derecho in this directory'
-        Derecho::Sub::Config.new.show
+        Derecho::CLI::Subcommand::Config.new.show
       else
-        Derecho::Sub::Config.new.setup
+        Derecho::CLI::Subcommand::Config.new.setup
       end
     end
     
