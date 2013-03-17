@@ -52,6 +52,7 @@ class Derecho
       end
       
       def add_node(lb_id, node_id, address, port = 80, condition = 'ENABLED')
+        # ignore the request if it's already attached
         unless get_nodes(lb_id).any? {|n| n.id == node_id }
           node = @service.node.new
           node.load_balancer = get(lb_id)

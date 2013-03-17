@@ -1,8 +1,8 @@
-Name  <%=@name%> <%=@id%>
-Port  <%=@port%>
+Name  <%=@attributes[:name]%> <%=@attributes[:id]%>
+Port  <%=@attributes[:port]%>
 IP(s)
-<% @virtualIps.each do |ip| %>
-  <%=ip['address']%>
+<% @virtual_ips.each do |ip| %>
+  <%=ip.address%>
 <% end %>
-Status  <%=@status%>
-Node(s) <%=@nodeCount%>
+Status  <%=@attributes[:state]%>
+Node(s) <%=@attributes['nodeCount']%>
