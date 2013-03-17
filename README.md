@@ -78,9 +78,12 @@ srv:
 #### All Tasks
 <pre>
 Tasks:
-  derecho config # Manage config settings
-  derecho lb     # Manage cloud load balancers
-  derecho srv    # Manage cloud servers
+  derecho config          # Manage config settings
+  derecho help [command]  # Find help on a specific command
+  derecho init            # Create a .derecho file in this directory
+  derecho lb              # Manage cloud load balancers
+  derecho srv             # Manage cloud servers
+  derecho version         # Show version number
 </pre>
 
 #### Load Balancers
@@ -88,7 +91,10 @@ Tasks:
 $ derecho lb
 
 Tasks:
-  derecho lb list # List all cloud load balancers
+  derecho lb create [lb-name] [first-server-id]  # Create a load balancer and attach a server to it
+  derecho lb delete [lb-id]                      # Delete a load balancer
+  derecho lb help [command]                      # Find help on a specific command
+  derecho lb list                                # List all cloud load balancers
 </pre>
 
 <pre>
@@ -96,13 +102,15 @@ $ derecho lb list
 
 Name    lb-80 108347
 Port    80
-IP(s)   162.38.85.207
+IP(s)   
+  162.38.85.207
 Status  ACTIVE
 Node(s) 1
 
 Name    lb-443 108647
 Port    443
-IP(s)   162.38.85.207
+IP(s)   
+  162.38.85.207
 Status  ACTIVE
 Node(s) 2
 </pre>
@@ -112,7 +120,8 @@ Node(s) 2
 $ derecho srv
 
 Tasks:
-  derecho srv list # List all cloud servers
+  derecho srv help [command]  # Find help on a specific command
+  derecho srv list            # List all cloud servers
 </pre>
 
 <pre>
@@ -121,19 +130,25 @@ $ derecho srv list
 Name   cs1 d7fa99e2-c1c6-48d0-b846-7e3c291682e0
 Flavor 2
 Image  5cebb13a-f783-4f8c-8058-c4182c724ccd
-IPs    162.38.121.30 (public) 10.177.143.130 (private)
+IPs    
+  162.38.121.30 (public) 
+  10.177.143.130 (private)
 Status ACTIVE
 
 Name   cs2 458e3c59-93e5-480d-bd9f-4dcedfb0dfc5
 Flavor 3
 Image  846f98e2-ab52-412a-ab05-91b92be40f52
-IP(s)  162.38.122.222 (public) 10.177.135.201 (private)
+IP(s)  
+  162.38.122.222 (public) 
+  10.177.135.201 (private)
 Status ACTIVE
 
 Name   cs3 1ebdfbe4-ba87-4b5b-8fe5-1af769745fb8
 Flavor 3
 Image  8a3a9f96-b997-46fd-b7a8-a9e740796ffd
-IP(s)  162.38.119.60 (public) 10.177.137.239 (private)
+IP(s)  
+  162.38.119.60 (public) 
+  10.177.137.239 (private)
 Status ACTIVE
 </pre>
 
