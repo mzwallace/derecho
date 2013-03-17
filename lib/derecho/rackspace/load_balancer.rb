@@ -17,7 +17,7 @@ class Derecho
         })
       end
       
-      def create(name, server_id, protocol = 'HTTP', port = 80, virtual_ip_type = 'PUBLIC')
+      def create name, server_id, protocol = 'HTTP', port = 80, virtual_ip_type = 'PUBLIC'
         server_ip = Derecho::Rackspace::Server.new.get(server_id).private_ip_address
         
         lb = @service.load_balancers.create(
@@ -29,29 +29,35 @@ class Derecho
         )
       end
       
+      def delete lb_id
+        lb = get lb_id
+        lb.destroy
+        lb
+      end
+      
       def get_all
         @service.load_balancers.all
       end
       
-      def get(lb_id)
-        @service.load_balancers.get(lb_id)
+      def get lb_id
+        @service.load_balancers.get lb_id
       end
       
-      def get_nodes(lb_id)
+      def get_nodes lb_id
         nodes = @service.nodes.new
-        nodes.load_balancer = get(lb_id)
+        nodes.load_balancer = get lb_id
         nodes.all
       end
       
-      def get_node(lb_id, node_id)
+      def get_node lb_id, node_id
         nodes = @service.nodes.new
-        nodes.load_balancer = get(lb_id)
+        nodes.load_balancer = get lb_id 
         
         # possible exception to catch
-        nodes.get(node_id)
+        nodes.get node_id
       end
       
-      def add_node(lb_id, node_id, address, port = 80, condition = 'ENABLED')
+      def add_node lb_id, node_id, address, port = 80, condition = 'ENABLED'
         # ignore the request if it's already attached
         unless get_nodes(lb_id).any? {|n| n.id == node_id }
           node = @service.node.new
@@ -63,7 +69,7 @@ class Derecho
         end
       end
       
-      def remove_node(lb_id, node_id)
+      def remove_node lb_id, node_id
         get_node(lb_id, node_id).destroy 
       end
     end

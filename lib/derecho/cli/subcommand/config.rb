@@ -5,13 +5,13 @@ class Derecho
 
         attr_accessor :config
       
-        def initialize(args=[], options={}, config={})
+        def initialize *args
           super
           @config = Derecho::Config.new
         end
       
         desc 'show [*keys]', 'Print groups or specific config settings'
-        def show(*keys)
+        def show *keys
           check
           @config.read
         
@@ -26,7 +26,7 @@ class Derecho
         end
 
         desc 'set [*keys] [value]', 'Set a config value (i.e. set accounts rackspace username my_username)'
-        def set(*keys)
+        def set *keys
           check
           @config.read
         
@@ -84,12 +84,12 @@ class Derecho
         
           # THANK YOU RAILS!
         
-          def deep_merge(hash, other_hash)
+          def deep_merge hash, other_hash
             hash = hash.clone
-            deep_merge!(hash, other_hash)
+            deep_merge! hash, other_hash
           end
         
-          def deep_merge!(hash, other_hash)
+          def deep_merge! hash, other_hash
             other_hash.each_pair do |k,v|
               tv = hash[k]
               hash[k] = tv.is_a?(Hash) && v.is_a?(Hash) ? deep_merge(tv, v) : v

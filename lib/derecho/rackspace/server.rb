@@ -21,7 +21,7 @@ class Derecho
         @service.servers.all
       end
       
-      def get(server_id)
+      def get server_id
         @service.servers.get(server_id)
       end
       
