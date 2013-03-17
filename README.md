@@ -1,6 +1,6 @@
 # Derecho
 
-Cloud automation help for the Rackspace Cloud + Chef + Beanstalkapp.  <a href="http://en.wikipedia.org/wiki/Derecho" target="_blank">Derecho</a>?
+CLI cloud automation gem for the Rackspace Cloud + Chef (+ Beanstalkapp?).  <a href="http://en.wikipedia.org/wiki/Derecho" target="_blank">Derecho</a>?
 
 ## <b><i>The Big Idea</i></b>
 Heroku ease of use + robust Chef cookbooks + solid hosting on Rackspace
