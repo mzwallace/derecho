@@ -73,7 +73,7 @@ srv:
 
 ## What's actually working?
 
-<b>Right now there is only support for viewing load balancers and server stats, more to come very soon.</b>
+<b>Right now there is only support for viewing / creating / deleting load balancers and viewing server stats, more to come very soon.</b>
 
 #### All Tasks
 <pre>
