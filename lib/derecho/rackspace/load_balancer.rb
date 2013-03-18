@@ -4,16 +4,20 @@ class Derecho
       
       @@api_endpoint = '.loadbalancers.api.rackspacecloud.com/v1.0/'
       
-      attr_accessor :service
+      #attr_accessor :service
       
       def initialize
-        @config = Derecho::Config.new
-        @config.read
-        @settings = @config['accounts']['rackspace']
+        config = Derecho::Config.new
+        config.read
+        settings = config['accounts']['rackspace']
+        
+        #puts settings
+        #exit
+        
         @service = Fog::Rackspace::LoadBalancers.new({
-          :rackspace_username    => @settings['username'],
-          :rackspace_api_key     => @settings['api_key'],
-          :rackspace_lb_endpoint => "https://#{@settings['region']}#{@@api_endpoint}"
+          :rackspace_username    => settings['username'],
+          :rackspace_api_key     => settings['api_key'],
+          :rackspace_lb_endpoint => "https://#{settings['region']}#{@@api_endpoint}"
         })
       end
       

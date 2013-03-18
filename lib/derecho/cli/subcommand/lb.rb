@@ -47,12 +47,14 @@ class Derecho
         
         desc 'attach [lb-id] [server-id]', 'Attach a server to a load balancer'
         def attach lb_id, server_id
+          Derecho::CLI::Subcommand.config_check
           lb = Derecho::Rackspace::Load_Balancer.new
           lb.attach_node lb_id, server_id
         end
         
         desc 'detach [lb-id] [server-id]', 'Detach a server from a load balancer'
         def detach lb_id, server_id
+          Derecho::CLI::Subcommand.config_check
           lb = Derecho::Rackspace::Load_Balancer.new
           lb.detach_node lb_id, server_id
         end

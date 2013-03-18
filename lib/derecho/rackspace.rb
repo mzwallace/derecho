@@ -1,4 +1,5 @@
 require 'derecho'
+require 'fog'
 
 class Derecho
   module Rackspace; end
