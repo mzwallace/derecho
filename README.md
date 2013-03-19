@@ -115,6 +115,78 @@ Status  ACTIVE
 Node(s) 2
 </pre>
 
+#####Why not make this easy? 
+
+<b>Baby steps only available in github downloaded version of gem as of yet, will release to rubygems soon</b>
+
+<pre>
+$ derecho lb create
+
+What do you want to name your load balancer? test-lb
+
+Available Servers:
+1. test1 a3468d3ec7ea
+2. test2 7e3c291682e0
+3. test3 4dcedfb0dfc5
+4. test4 1af769745fb8
+
+Choose a server number: 1
+
+Attach server: test to load balancer: test-lb? yes
+
+Building Load Balancer:
+Name:     test-lb
+ID:       1111111
+Protocol: HTTP
+Port:     80
+IP Type:  PUBLIC
+
+Status: BUILD
+Status: BUILD
+Status: BUILD
+Status: BUILD
+Status: BUILD
+Status: BUILD
+Status: BUILD
+Status: BUILD
+Status: BUILD
+Status: BUILD
+Status: BUILD
+Status: BUILD
+Status: BUILD
+Status: BUILD
+Status: ACTIVE
+Operation complete.
+</pre>
+
+<pre>
+d lb delete
+
+Available Load Balancers:
+1. test-lb3 333333
+2. test-lb2 222222
+3. test-lb1 111111
+
+Choose a load balancer number: 3
+
+Delete load balancer: test-lb1? yes
+
+Waiting for Load Balancer to shut down: test-lb1 111111
+
+Status: PENDING_DELETE
+Status: PENDING_DELETE
+Status: PENDING_DELETE
+Status: PENDING_DELETE
+Status: PENDING_DELETE
+Status: PENDING_DELETE
+Status: PENDING_DELETE
+Status: PENDING_DELETE
+Status: PENDING_DELETE
+Status: PENDING_DELETE
+Status: DELETED
+Operation complete.
+</pre>
+
 #### Servers
 <pre>
 $ derecho srv
