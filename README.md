@@ -134,7 +134,7 @@ Choose a server number: 1
 
 Attach server test1 to load balancer test-lb? yes
 
-Building Load Balancer:
+Building load balancer:
 Name:     test-lb
 ID:       1111111
 Protocol: HTTP
@@ -171,7 +171,9 @@ Choose a load balancer number: 3
 
 Delete load balancer test-lb1? yes
 
-Waiting for Load Balancer to shut down: test-lb1 111111
+Waiting for load balancer to shut down: 
+Name: test-lb1 
+ID:   111111
 
 Status: PENDING_DELETE
 Status: PENDING_DELETE
