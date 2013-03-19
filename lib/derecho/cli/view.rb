@@ -18,11 +18,11 @@ class Derecho
     
       module_function
     
-      def compile(view_name, object)
+      def compile(view_name, object, options = {})
         path = "#{File.dirname(__FILE__)}/view/#{view_name}.erb"
       
         if File.exists? path
-          Tilt.new(path).render object  
+          Tilt.new(path).render object, options
         else
           ''
         end

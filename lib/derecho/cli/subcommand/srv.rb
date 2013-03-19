@@ -6,11 +6,11 @@ class Derecho
         desc 'list', 'List all cloud servers'
         def list
           Derecho::CLI::Subcommand.config_check
-          cs = Derecho::Rackspace::Server.new
-          css = cs.get_all
-          css.each_with_index do |cs, index|
-            say Derecho::CLI::View.compile 'srv', cs
-            say '' unless index == css.size - 1
+          srv = Derecho::Rackspace::Server.new
+          srvs = srv.all
+          srvs.each_with_index do |cs, index|
+            say Derecho::CLI::View.compile 'srv-list-detailed', cs
+            say '' unless index == srvs.size - 1
           end
         end
 

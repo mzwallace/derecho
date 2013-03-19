@@ -7,9 +7,9 @@ class Derecho
         def list
           Derecho::CLI::Subcommand.config_check
           lb = Derecho::Rackspace::Load_Balancer.new
-          lbs = lb.get_all
+          lbs = lb.all
           lbs.each_with_index do |lb, index|
-            say Derecho::CLI::View.compile 'lb', lb
+            say Derecho::CLI::View.compile 'lb-list-detailed', lb
             say '' unless index == lbs.size - 1
           end
         end
@@ -18,14 +18,46 @@ class Derecho
         option :protocol,        :alias => '-r', :default => 'HTTP', :desc => 'e.g. HTTP, HTTPS'
         option :port,            :alias => '-p', :default => 80,     :desc => 'e.g. 80, 443'
         option :virtual_ip_type, :alias => '-t', :default => 'PUBLIC', :desc => 'e.g. PUBLIC, SERVICENET'
-        def create name, server_id, protocol = 'HTTP', port = 80, virtual_ip_type = 'PUBLIC'
+        def create name = nil, server_id = nil, protocol = 'HTTP', port = 80, virtual_ip_type = 'PUBLIC'
           Derecho::CLI::Subcommand.config_check
+          
+          if name.nil?
+            name = ask 'What do you want to name your load balancer?'
+            say ''
+          end
+          
+          if server_id.nil?
+            srvs = Derecho::Rackspace::Server.new.all
+            say 'Available Servers:'
+            srvs.each_with_index do |srv, index|
+              say Derecho::CLI::View.compile 'srv-list-oneline', srv, :number => index + 1
+            end
+            say ''
+            num = ask('Choose a server number:').to_i
+            index = num - 1
+            say '' 
+            if yes? "Attach server: #{srvs[index].name} to load balancer: #{name}?"
+              say ''
+              server_id = srvs[index].id
+            else
+              say ''
+              say 'Operation canceled.'
+              exit
+            end
+          end 
+            
           lb = Derecho::Rackspace::Load_Balancer.new
           
           if lb.server_exists? server_id
             fog_lb = lb.create name, server_id, protocol, port, virtual_ip_type
           
-            say "Building Load Balancer: #{name} #{fog_lb.id}"
+            say 'Building Load Balancer:'
+            say "Name:     #{name}"
+            say "ID:       #{fog_lb.id}"
+            say "Protocol: #{protocol}" 
+            say "Port:     #{port}"
+            say "IP Type:  #{virtual_ip_type}"
+            say ''
             fog_lb.wait_for(1800, 5) do 
               puts "Status: #{state}"
               puts 'Operation complete.' if ready?
@@ -37,14 +69,37 @@ class Derecho
         end
         
         desc 'delete [lb-id]', 'Delete a load balancer'
-        def delete lb_id
+        def delete lb_id = nil
           Derecho::CLI::Subcommand.config_check
+          
+          if lb_id.nil?
+            lbs = Derecho::Rackspace::Load_Balancer.new.all
+            say 'Available Load Balancers:'
+            lbs.each_with_index do |lb, index|
+              say Derecho::CLI::View.compile 'lb-list-oneline', lb, :number => index + 1
+            end
+            say ''
+            num = ask('Choose a load balancer number:').to_i
+            index = num - 1
+            say '' 
+            lb = lbs[index]
+            if yes? "Delete load balancer: #{lb.name}?"
+              say ''
+              lb_id = lb.id
+            else
+              say ''
+              say 'Operation canceled.'
+              exit
+            end
+          end 
+          
           lb = Derecho::Rackspace::Load_Balancer.new
           
           if lb.exists? lb_id
             fog_lb = lb.delete lb_id
           
             say "Waiting for Load Balancer to shut down: #{fog_lb.name} #{lb_id}"
+            say ''
             fog_lb.wait_for(1800, 5) do 
               puts "Status: #{state}"
               puts 'Operation complete.' if state === 'DELETED'
