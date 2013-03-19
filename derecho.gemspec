@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.date          = '2013-03-07'
   spec.authors       = ['Johnny Green']
   spec.email         = ['johnnygreen@gmail.com']
-  spec.description   = 'Cloud automation help for the Rackspace Cloud + Chef + Beanstalkapp'
-  spec.summary       = 'Derecho'
+  spec.description   = 'CLI cloud automation gem for the Rackspace Cloud + Chef + Beanstalkapp'
+  spec.summary       = 'This is a work in progress. Looking for help!'
   spec.homepage      = 'http://github.com/mzwallace/derecho'
   spec.license       = 'MIT'
 
