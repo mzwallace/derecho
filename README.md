@@ -115,9 +115,9 @@ Status  ACTIVE
 Node(s) 2
 </pre>
 
-#####Why not make this easy? 
+Why not make this easy? 
 
-<b>Baby steps only available in github downloaded version of gem as of yet, will release to rubygems soon</b>
+<b>Baby steps only available in github downloaded version of gem as of yet, will release to rubygems soon. Until then you just need to put in the required info upfront.</b>
 
 <pre>
 $ derecho lb create
@@ -160,7 +160,7 @@ Operation complete.
 </pre>
 
 <pre>
-d lb delete
+$ derecho lb delete
 
 Available Load Balancers:
 1. test-lb3 333333
