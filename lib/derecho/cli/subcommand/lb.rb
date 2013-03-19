@@ -15,19 +15,24 @@ class Derecho
         end
     
         desc 'create [lb-name] [first-server-id]', 'Create a load balancer and attach a server to it'
-        option :protocol,  :aliases => '-r', :default => 'HTTP', :desc => 'e.g. HTTP, HTTPS'
-        option :port,      :aliases => '-p', :default => 80,     :desc => 'e.g. 80, 443'
+        option :protocol,        :alias => '-r', :default => 'HTTP', :desc => 'e.g. HTTP, HTTPS'
+        option :port,            :alias => '-p', :default => 80,     :desc => 'e.g. 80, 443'
         option :virtual_ip_type, :alias => '-t', :default => 'PUBLIC', :desc => 'e.g. PUBLIC, SERVICENET'
-        def create name, server_ip, protocol = 'HTTP', port = 80, virtual_ip_type = 'PUBLIC'
+        def create name, server_id, protocol = 'HTTP', port = 80, virtual_ip_type = 'PUBLIC'
           Derecho::CLI::Subcommand.config_check
           lb = Derecho::Rackspace::Load_Balancer.new
-          lb = lb.create name, server_ip, protocol, port, virtual_ip_type
           
-          say 'Creating Load Balancer'
-          lb.wait_for(600, 5) do 
-            print '.'
-            print 'complete' if ready?
-            ready?
+          if lb.server_exists? server_id
+            fog_lb = lb.create name, server_id, protocol, port, virtual_ip_type
+          
+            say "Building Load Balancer: #{name} #{fog_lb.id}"
+            fog_lb.wait_for(1800, 5) do 
+              puts "Status: #{state}"
+              puts 'Operation complete.' if ready?
+              ready?
+            end
+          else 
+            say "#{server_id} is not a valid Server ID."
           end
         end
         
@@ -35,13 +40,18 @@ class Derecho
         def delete lb_id
           Derecho::CLI::Subcommand.config_check
           lb = Derecho::Rackspace::Load_Balancer.new
-          lb = lb.delete lb_id
           
-          say 'Deleting Load Balancer'
-          lb.wait_for(600, 5) do 
-            print '.' 
-            print 'complete' if ready?
-            ready?
+          if lb.exists? lb_id
+            fog_lb = lb.delete lb_id
+          
+            say "Waiting for Load Balancer to shut down: #{fog_lb.name} #{lb_id}"
+            fog_lb.wait_for(1800, 5) do 
+              puts "Status: #{state}"
+              puts 'Operation complete.' if state === 'DELETED'
+              state === 'DELETED'
+            end
+          else
+            say "#{lb_id} is not a valid Load Balancer ID."
           end
         end
         

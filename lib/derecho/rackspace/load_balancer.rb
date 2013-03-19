@@ -57,6 +57,11 @@ class Derecho
         lb.nodes.select { |node| puts node }
       end
       
+      def exists? lb_id
+        lb = get lb_id
+        !lb.nil?
+      end
+      
       def server_exists? server_id
         server = Derecho::Rackspace::Server.new.get server_id
         !server.nil?
