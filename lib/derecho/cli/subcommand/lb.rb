@@ -28,7 +28,7 @@ class Derecho
           
           if server_id.nil?
             srvs = Derecho::Rackspace::Server.new.all
-            say 'Available Servers:'
+            say 'Available servers:'
             srvs.each_with_index do |srv, index|
               say Derecho::CLI::View.compile 'srv-list-oneline', srv, :number => index + 1
             end
@@ -36,7 +36,7 @@ class Derecho
             num = ask('Choose a server number:').to_i
             index = num - 1
             say '' 
-            if yes? "Attach server: #{srvs[index].name} to load balancer: #{name}?"
+            if yes? "Attach server #{srvs[index].name} to load balancer #{name}?"
               say ''
               server_id = srvs[index].id
             else
@@ -64,7 +64,7 @@ class Derecho
               ready?
             end
           else 
-            say "#{server_id} is not a valid Server ID."
+            say "#{server_id} is not a valid server id."
           end
         end
         
@@ -74,7 +74,7 @@ class Derecho
           
           if lb_id.nil?
             lbs = Derecho::Rackspace::Load_Balancer.new.all
-            say 'Available Load Balancers:'
+            say 'Available load balancers:'
             lbs.each_with_index do |lb, index|
               say Derecho::CLI::View.compile 'lb-list-oneline', lb, :number => index + 1
             end
@@ -83,7 +83,7 @@ class Derecho
             index = num - 1
             say '' 
             lb = lbs[index]
-            if yes? "Delete load balancer: #{lb.name}?"
+            if yes? "Delete load balancer #{lb.name}?"
               say ''
               lb_id = lb.id
             else
@@ -98,7 +98,7 @@ class Derecho
           if lb.exists? lb_id
             fog_lb = lb.delete lb_id
           
-            say "Waiting for Load Balancer to shut down: #{fog_lb.name} #{lb_id}"
+            say "Waiting for load balancer to shut down: #{fog_lb.name} #{lb_id}"
             say ''
             fog_lb.wait_for(1800, 5) do 
               puts "Status: #{state}"
@@ -106,7 +106,7 @@ class Derecho
               state === 'DELETED'
             end
           else
-            say "#{lb_id} is not a valid Load Balancer ID."
+            say "#{lb_id} is not a valid load balancer id."
           end
         end
         
