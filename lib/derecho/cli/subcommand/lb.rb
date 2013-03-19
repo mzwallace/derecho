@@ -51,7 +51,7 @@ class Derecho
           if lb.server_exists? server_id
             fog_lb = lb.create name, server_id, protocol, port, virtual_ip_type
           
-            say 'Building Load Balancer:'
+            say 'Building load balancer:'
             say "Name:     #{name}"
             say "ID:       #{fog_lb.id}"
             say "Protocol: #{protocol}" 
