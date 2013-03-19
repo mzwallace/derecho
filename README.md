@@ -169,7 +169,7 @@ Available Load Balancers:
 
 Choose a load balancer number: 3
 
-Delete load balancer: test-lb1? yes
+Delete load balancer test-lb1? yes
 
 Waiting for Load Balancer to shut down: test-lb1 111111
 
