@@ -98,7 +98,9 @@ class Derecho
           if lb.exists? lb_id
             fog_lb = lb.delete lb_id
           
-            say "Waiting for load balancer to shut down: #{fog_lb.name} #{lb_id}"
+            say 'Waiting for load balancer to shut down:'
+            say "Name: #{fog_lb.name}"
+            say "ID:   #{lb_id}"
             say ''
             fog_lb.wait_for(1800, 5) do 
               puts "Status: #{state}"
