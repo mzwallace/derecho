@@ -132,7 +132,7 @@ Available Servers:
 
 Choose a server number: 1
 
-Attach server: test to load balancer: test-lb? yes
+Attach server test1 to load balancer test-lb? yes
 
 Building Load Balancer:
 Name:     test-lb
