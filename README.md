@@ -124,7 +124,7 @@ $ derecho lb create
 
 What do you want to name your load balancer? test-lb
 
-Available Servers:
+Available servers:
 1. test1 a3468d3ec7ea
 2. test2 7e3c291682e0
 3. test3 4dcedfb0dfc5
@@ -162,7 +162,7 @@ Operation complete.
 <pre>
 $ derecho lb delete
 
-Available Load Balancers:
+Available load balancers:
 1. test-lb3 333333
 2. test-lb2 222222
 3. test-lb1 111111
