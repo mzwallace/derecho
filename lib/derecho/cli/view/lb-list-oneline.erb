@@ -1,1 +1,1 @@
-<%=number%>. <%=@attributes[:name]%> <%=@attributes[:id]%>
+<% if defined? number %><%=number%>. <% end %>ID: <%=@attributes[:id]%> Name: <%=@attributes[:name]%>

@@ -3,21 +3,22 @@ class Derecho
     module Subcommand
       class Lb < Derecho::Thor
 
-        desc 'list', 'List all cloud load balancers'
+        desc 'list', 'List all load balancers'
+        option :detailed, :aliases => '-d', :type => :boolean
         def list
           Derecho::CLI::Subcommand.config_check
           lb = Derecho::Rackspace::Load_Balancer.new
           lbs = lb.all
           lbs.each_with_index do |lb, index|
-            say Derecho::CLI::View.compile 'lb-list-detailed', lb
-            say '' unless index == lbs.size - 1
+            say Derecho::CLI::View.compile options[:detailed] ? 'lb-list-detailed' : 'lb-list-oneline', lb
+            say '' if options[:detailed] and index < lbs.size - 1
           end
         end
     
         desc 'create [lb-name] [first-server-id]', 'Create a load balancer and attach a server to it'
-        option :protocol,        :alias => '-r', :default => 'HTTP', :desc => 'e.g. HTTP, HTTPS'
-        option :port,            :alias => '-p', :default => 80,     :desc => 'e.g. 80, 443'
-        option :virtual_ip_type, :alias => '-t', :default => 'PUBLIC', :desc => 'e.g. PUBLIC, SERVICENET'
+        option :protocol,        :aliases => '-r', :default => 'HTTP', :desc => 'e.g. HTTP, HTTPS'
+        option :port,            :aliases => '-p', :default => 80,     :desc => 'e.g. 80, 443'
+        option :virtual_ip_type, :aliases => '-t', :default => 'PUBLIC', :desc => 'e.g. PUBLIC, SERVICENET'
         def create name = nil, server_id = nil, protocol = 'HTTP', port = 80, virtual_ip_type = 'PUBLIC'
           Derecho::CLI::Subcommand.config_check
           
@@ -101,7 +102,8 @@ class Derecho
           end
         end
         
-        desc 'nodes [lb-id]', 'List a cloud load balancer\'s nodes'
+        desc 'nodes [lb-id]', 'List a load balancer\'s nodes'
+        option :detailed, :aliases => '-d', :type => :boolean
         def nodes lb_id = nil
           Derecho::CLI::Subcommand.config_check
           
@@ -113,8 +115,8 @@ class Derecho
           nodes = Derecho::Rackspace::Load_Balancer.new.get_nodes lb_id
           
           nodes.each_with_index do |node, index|
-            say Derecho::CLI::View.compile 'node-list-detailed', node
-            say '' unless index == nodes.size - 1
+            say Derecho::CLI::View.compile options[:detailed] ? 'node-list-detailed' : 'node-list-oneline', node
+            say '' if options[:detailed] and index < nodes.size - 1
           end
         end
         
