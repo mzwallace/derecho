@@ -7,7 +7,7 @@ Heroku ease of use + robust Chef cookbooks + solid hosting on Rackspace
 ```
 $ derecho scale test=4 # scale the test role type to 4 nodes
 ```
-<a href="https://github.com/mzwallace/derecho/wiki/The-Plan">Wiki: The Plan Extended.</a>
+<a href="https://github.com/mzwallace/derecho/wiki/The-Plan">Wiki: The extended plan</a>
 
 ## What's actually working?
 
