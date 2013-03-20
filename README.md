@@ -7,7 +7,7 @@ Heroku ease of use + robust Chef cookbooks + solid hosting on Rackspace
 ```
 $ derecho scale test=4 # scale the test role type to 4 nodes
 ```
-<a href="https://github.com/mzwallace/derecho/wiki/The-Plan">The Plan Extended.</a>
+<a href="https://github.com/mzwallace/derecho/wiki/The-Plan">Wiki: The Plan Extended.</a>
 
 ## What's actually working?
 
@@ -35,7 +35,7 @@ Tasks:
   derecho lb list                                # List all cloud load balancers
 </pre>
 
-<a href="https://github.com/mzwallace/derecho/wiki/Load-Balancers">Load balancer examples</a>
+<a href="https://github.com/mzwallace/derecho/wiki/Load-Balancers">Wiki: Load balancer examples</a>
 
 #### Servers
 <pre>
@@ -46,7 +46,7 @@ Tasks:
   derecho srv list            # List all cloud servers
 </pre>
 
-<a href="https://github.com/mzwallace/derecho/wiki/Servers">Server examples</a>
+<a href="https://github.com/mzwallace/derecho/wiki/Servers">Wiki: Server examples</a>
 
 ## Installation
 
