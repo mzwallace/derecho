@@ -26,7 +26,7 @@ Tasks:
 
 #### Load Balancers
 
-All arguments are optional! If you leave them out, you will be prompted with a list of options to choose from.
+All arguments are optional! If you leave them out, you will be prompted with a list of options to choose from.  Also, nothing will happen until you confirm, so go nuts!
 
 <pre>
 $ derecho lb
