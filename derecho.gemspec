@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'thor', '0.17.0'
   
   # Temp until load balancer node bug is fixed, see Gemfile for replacement
-  #spec.add_dependency 'fog', '1.10.0'
+  spec.add_dependency 'fog', '1.10.0'
   
   spec.add_dependency 'tilt', '1.3.5'
   spec.add_development_dependency 'bundler', '1.3.4'

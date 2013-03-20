@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 gemspec
 
 # Temp until fog bug is fixed
-gem 'fog', :git => 'git@github.com:johnnygreen/fog.git', :branch => "fix_rackspace_load_balancer_node_bug"
+#gem 'fog', :git => 'git@github.com:johnnygreen/fog.git', :branch => "fix_rackspace_load_balancer_node_bug"
 
 gem 'guard'
 gem 'guard-rspec'
