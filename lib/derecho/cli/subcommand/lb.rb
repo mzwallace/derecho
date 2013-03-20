@@ -186,10 +186,10 @@ class Derecho
               say Derecho::CLI::View.compile 'node-list-oneline', node, :number => index + 1
             end
             
-            shell.say ''
-            num = shell.ask('Choose a node number:').to_i
+            say ''
+            num = ask('Choose a node number:').to_i
             index = num - 1
-            shell.say '' 
+            say '' 
             fog_node = nodes[index]
             node_id = fog_node.id
           end
