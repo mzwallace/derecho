@@ -61,16 +61,18 @@ $ derecho init
 
 ## Roadmap
 
-1. Chef solo or Chef server? Or both???
-2. ~~Easy configuration using derecho config~~
-3. Ability to add / remove servers to / from load balancers <b><i>In Progress</i></b>
-4. Ability to create servers like with chef's knife rackspace command.
-5. Once a server is spun up the server is added to a beanstalkapp deployment environment and the same revision that lives on other servers would then be deployed to our new server.
-6. Once a server is spun up a ping health check monitor would be added.
-7. The server will then be added to the load balancer.
-8. Ability to spin up chef server with one command.
-9. A subcommand dedicated to building out entire computer networks from a config file.
+1. ~~Easy configuration using derecho config~~
+2. ~~Ability to create / delete load balancers~~
+3. Ability to attach nodes to / detach nodes from load balancers <b><i>In Progress</i></b>
 
+Blah Blah Blah
+-Ability to create and bootstrap servers like with chef's knife rackspace command.
+-Once a server is spun up the server is added to a beanstalkapp deployment environment and the same revision that lives on other servers would then be deployed to our new server.
+-Once a server is spun up a ping health check monitor would be added.
+-The server will then be added to the load balancer.
+-Ability to spin up chef server with one command.
+-A subcommand dedicated to building out entire computer networks from a config file.
+-Chef solo or Chef server? Or both???
 
 ## Help! 
 
