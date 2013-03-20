@@ -7,11 +7,11 @@ Heroku ease of use + robust Chef cookbooks + solid hosting on Rackspace
 ```
 $ derecho scale test=4 # scale the test role type to 4 nodes
 ```
-<a href="https://github.com/mzwallace/derecho/wiki/The-Plan">Wiki: The Plan Extended.</a>
+<a href="https://github.com/mzwallace/derecho/wiki/The-Plan">Wiki: The extended plan</a>
 
 ## What's actually working?
 
-<b>Right now there is only support for viewing / creating / deleting load balancers and viewing server stats, more to come very soon.</b>
+I'll try to keep a summary of the tasks that are working below.  Since this is a work in progress, the documentation will likely be consistant with the gem as if you downloaded it directly from this repo (not the RubyGems.org version, but try checking the --pre).
 
 #### All Tasks
 <pre>
@@ -25,6 +25,9 @@ Tasks:
 </pre>
 
 #### Load Balancers
+
+All arguments are optional! If you leave them out, you will be prompted with a list of options to choose from.  Also, nothing will happen until you confirm, so go nuts!
+
 <pre>
 $ derecho lb
 
