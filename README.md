@@ -46,6 +46,8 @@ Tasks:
   derecho srv list            # List all cloud servers
 </pre>
 
+<a href="https://github.com/mzwallace/derecho/wiki/Servers">Server examples</a>
+
 ## Installation
 
 Add this line to your application's Gemfile:
