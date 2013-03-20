@@ -76,7 +76,8 @@ class Derecho
               if yes? 'There is no .derecho file in this directory, would you like to setup one now?'
                 setup
               else
-                say 'To continue you must setup a .derecho file in this directory'
+                say ''
+                say 'To continue you must setup a .derecho file in this directory.'
                 exit
               end
             end
