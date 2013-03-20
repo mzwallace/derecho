@@ -64,7 +64,10 @@ Or install it yourself as:
 
 Config File - The .derecho file needs to be in your current working directory.
 
-Setup your config file using ```$ derecho init```
+Setup your config file
+```
+$ derecho init
+```
 
 <pre>
 $ cat .derecho    
