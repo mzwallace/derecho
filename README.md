@@ -61,12 +61,13 @@ $ derecho init
 
 ## Roadmap
 
+Completed / In Progress
 1. ~~Easy configuration using derecho config~~
 2. ~~Ability to list all the things~~
 3. ~~Ability to create / delete load balancers~~
 4. Ability to attach nodes to / detach nodes from load balancers <b><i>In Progress</i></b>
 
-Blah Blah Blah
+Decisions to be made / What's next
 * Ability to create and bootstrap servers like with chef's knife rackspace command.
 * Once a server is spun up the server is added to a beanstalkapp deployment environment and the same revision that lives on other servers would then be deployed to our new server.
 * Once a server is spun up a ping health check monitor would be added.
