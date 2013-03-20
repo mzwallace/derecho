@@ -59,7 +59,7 @@ $ gem install derecho
 ```
 or
 ```
-$ gem search derecho --pre  # might find a better version this way
+$ gem search derecho --pre --remote # might find a better version this way
 $ gem install derecho --version v###
 ```
 Once the gem is installed ...
