@@ -63,8 +63,8 @@ $ derecho init
 
 1. ~~Easy configuration using derecho config~~
 2. ~~Ability to list all the things~~
-2. ~~Ability to create / delete load balancers~~
-3. Ability to attach nodes to / detach nodes from load balancers <b><i>In Progress</i></b>
+3. ~~Ability to create / delete load balancers~~
+4. Ability to attach nodes to / detach nodes from load balancers <b><i>In Progress</i></b>
 
 Blah Blah Blah
 +Ability to create and bootstrap servers like with chef's knife rackspace command.
