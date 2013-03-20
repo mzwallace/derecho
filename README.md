@@ -34,8 +34,8 @@ Tasks:
   derecho lb delete [lb-id]                      # Delete a load balancer
   derecho lb detach [lb-id] [node-id]            # Detach a node from a load balancer
   derecho lb help [command]                      # Find help on a specific command
-  derecho lb list                                # List all cloud load balancers
-  derecho lb nodes [lb-id]                       # List a cloud load balancer's nodes
+  derecho lb list                                # List all load balancers
+  derecho lb nodes [lb-id]                       # List a load balancer's nodes
 </pre>
 
 <a href="https://github.com/mzwallace/derecho/wiki/Load-Balancers">Wiki: Load balancer examples</a>
