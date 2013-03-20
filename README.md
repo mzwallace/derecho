@@ -50,39 +50,14 @@ Tasks:
 
 ## Installation
 
-Add this line to your application's Gemfile:
+<a href="https://github.com/mzwallace/derecho/wiki/Installation">Wiki: Installtion</a>
 
-    gem 'derecho'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install derecho
-
-Config File - The .derecho file needs to be in your current working directory.
-
-Setup your config file
-```
-$ derecho init
-```
+The short of it:
 
 <pre>
-$ cat .derecho    
-
-accounts:
-  rackspace:
-    username: my_rackspace_username
-    api_key:  1234567890
-    region:   ord
+$ gem install derecho
+$ derecho init
 </pre>
-
-Check your config with:
-```
-$ derecho config show
-```
 
 ## Roadmap
 
