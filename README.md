@@ -7,69 +7,7 @@ Heroku ease of use + robust Chef cookbooks + solid hosting on Rackspace
 ```
 $ derecho scale test=4 # scale the test role type to 4 nodes
 ```
-<pre>
-$ cat .derecho
-
-#YAML
-
-accounts:
-  rackspace:
-    username: rackspace_username
-    api_key:  rackspace_api_key
-  beanstalkapp:
-    domain:   beanstalk_domain
-    login:    beanstalk_log
-    password: beanstalk_password
-
-lb:
-  defaults:
-    region:     ord
-    http:       http
-    algorithm:  least_connections
-    protocol:   80
-    port:       80
-  roles:
-    lb-name: 
-      key:      value
-    www-80:
-    secure-80:
-      region:   dfw
-    secure-443:
-      region:   dfw
-      protocol: https
-      port:     443
-      monitor:
-        type:     connect
-        interval: 10
-        timeout:  5
-        attempts: 2
-      throttling:
-        max_connections: 100
-        threshold:       25
-        limit_to:        25
-        timeframe:       5
-    
-srv:
-  defaults:
-    region: ord
-    flavor: 2
-    image:  75fk3dhc7fd46
-  roles:
-    name: # each ServerName / NodeName will be set to name1, name2, name3 etc
-    secure:
-      nodes:   2 # if system first initialized it will create 2 nodes
-      role:    role[chef_base_role], role[chef_www], recipe[mod_ssl]
-      lb:      lb_name # optional -- ie secure-443, if you want to attach to a load balancer
-      app:     beanstalk_repo_name/folder # my_secure_app/Production
-      monitor: ping # optional -- rackspace health monitor type
-    www:
-      nodes:   5 # if system first initialized it will create 5 nodes
-      flavor:  3
-      role:    role[chef_base_role], role[chef_www]
-      lb:      www-80
-      app:     front_end/Production
-      volume:  volume_id
-</pre>
+<a href="https://github.com/mzwallace/derecho/wiki/The-Plan">The Plan Extended.</a>
 
 ## What's actually working?
 
