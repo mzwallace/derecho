@@ -67,13 +67,13 @@ $ derecho init
 4. Ability to attach nodes to / detach nodes from load balancers <b><i>In Progress</i></b>
 
 Blah Blah Blah
-+Ability to create and bootstrap servers like with chef's knife rackspace command.
-+Once a server is spun up the server is added to a beanstalkapp deployment environment and the same revision that lives on other servers would then be deployed to our new server.
-+Once a server is spun up a ping health check monitor would be added.
-+The server will then be added to the load balancer.
-+Ability to spin up chef server with one command.
-+A subcommand dedicated to building out entire computer networks from a config file.
-+Chef solo or Chef server? Or both???
+* Ability to create and bootstrap servers like with chef's knife rackspace command.
+* Once a server is spun up the server is added to a beanstalkapp deployment environment and the same revision that lives on other servers would then be deployed to our new server.
+* Once a server is spun up a ping health check monitor would be added.
+* The server will then be added to the load balancer.
+* Ability to spin up chef server with one command.
+* A subcommand dedicated to building out entire computer networks from a config file.
+* Chef solo or Chef server? Or both???
 
 ## Help! 
 
