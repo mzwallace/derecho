@@ -25,6 +25,9 @@ Tasks:
 </pre>
 
 #### Load Balancers
+
+All arguments are optional! If you leave them out, you will be prompted with a list of options to choose from.
+
 <pre>
 $ derecho lb
 
