@@ -1,4 +1,4 @@
-# Derecho
+# Derecho [![Gem Version](https://badge.fury.io/rb/derecho.png)](http://badge.fury.io/rb/derecho)
 
 CLI cloud automation gem for the Rackspace Cloud + Chef (+ Beanstalkapp?).  <a href="http://en.wikipedia.org/wiki/Derecho" target="_blank">Derecho</a>?
 
