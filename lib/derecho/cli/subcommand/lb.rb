@@ -168,7 +168,7 @@ class Derecho
           end
         end
         
-        desc 'detach [lb-id] [node-id]', 'Detach a server from a load balancer'
+        desc 'detach [lb-id] [node-id]', 'Detach a node from a load balancer'
         def detach lb_id = nil, node_id = nil
           Derecho::CLI::Subcommand.config_check
           lb = Derecho::Rackspace::Load_Balancer.new
