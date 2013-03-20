@@ -50,7 +50,7 @@ Tasks:
 
 ## Installation
 
-<a href="https://github.com/mzwallace/derecho/wiki/Installation">Wiki: Installtion</a>
+<a href="https://github.com/mzwallace/derecho/wiki/Installation">Wiki: Installation</a>
 
 The short of it:
 
