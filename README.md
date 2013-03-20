@@ -11,7 +11,7 @@ $ derecho scale test=4 # scale the test role type to 4 nodes
 
 ## What's actually working?
 
-<b>Right now there is only support for viewing / creating / deleting load balancers and viewing server stats, more to come very soon.</b>
+I'll try to keep a summary of the tasks that are working below.  Since this is a work in progress, the documentation will likely be consistant with the gem as if you downloaded it directly from the repo (not the RubyGems.org version, but try checking the --pre).
 
 #### All Tasks
 <pre>
