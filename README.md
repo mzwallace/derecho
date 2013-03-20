@@ -54,9 +54,18 @@ Tasks:
 
 The short of it:
 
-<pre>
+```
 $ gem install derecho
+```
+or
+```
+$ gem search derecho --pre  # might find a better version this way
+$ gem install derecho --version v###
+```
+Once the gem is installed ...
+```
 $ derecho init
+```
 </pre>
 
 ## Roadmap
