@@ -44,9 +44,9 @@ class Derecho
         lb.nodes.all
       end
       
-      def get_node lb_id, server_id
+      def get_node lb_id, node_id
         nodes = get_nodes lb_id 
-        nodes.select { |node| puts node }
+        nodes.select { |node| node.id == node_id }
       end
       
       def exists? lb_id
@@ -76,28 +76,38 @@ class Derecho
       end
       
       def attach lb_id, server_id, port = nil, condition = 'ENABLED'
-        if server_exists? server_id
+        # check that both lb and srv are valid
+        if exists? lb_id and server_exists? server_id
           # ignore the request if it's already attached
           unless is_attached? lb_id, server_id
-            #node = @service.node.new
-            #node.load_balancer = get lb_id 
-            #node.address = address
-            #node.port = port || node.load_balancer.port
-            #node.condition = condition
-            #node.save
+            lb = get lb_id
+            server = Derecho::Rackspace::Server.new.get server_id
+            
+            node = @service.nodes.new :service => @service, :load_balancer => lb
+            node.address = server.private_ip_address
+            node.port = port || lb.port
+            node.condition = condition
+            node.save
+            
+            lb
           end
         end
       end
       
       def detach lb_id, node_id
-        server = Derecho::Rackspace::Server.new.get server_id
-        nodes = get_nodes lb_id
+        if exists? lb_id
+          lb = get lb_id
+          nodes = get_nodes lb_id
         
-        if nodes.count > 1 and node_exists? node_id
-          node = get_node lb_id, node_id
-          node.destroy
+          if nodes.count > 1 and node_exists? node_id
+            node = get_node lb_id, node_id
+            node.destroy
+          end
+          
+          lb
         end
       end
+      
     end
   end
 end

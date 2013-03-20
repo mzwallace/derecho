@@ -27,42 +27,37 @@ class Derecho
           end
           
           if server_id.nil?
-            srvs = Derecho::Rackspace::Server.new.all
-            say 'Available servers:'
-            srvs.each_with_index do |srv, index|
-              say Derecho::CLI::View.compile 'srv-list-oneline', srv, :number => index + 1
-            end
-            say ''
-            num = ask('Choose a server number:').to_i
-            index = num - 1
-            say '' 
-            if yes? "Attach server #{srvs[index].name} to load balancer #{name}?"
+            fog_srv = Derecho::CLI::Subcommand.prompt_for_server 
+            server_id = fog_srv.id
+          end
+          
+          lb = Derecho::Rackspace::Load_Balancer.new
+          
+          if lb.server_exists? server_id
+            fog_srv ||= Derecho::Rackspace::Server.new.get server_id
+            
+            if yes? "Create load balancer #{name} with attached server #{fog_srv.name}?"
+              fog_lb = lb.create name, server_id, protocol, port, virtual_ip_type
+
               say ''
-              server_id = srvs[index].id
+              say 'Building load balancer:'
+              say "Name:     #{name}"
+              say "ID:       #{fog_lb.id}"
+              say "Protocol: #{protocol}" 
+              say "Port:     #{port}"
+              say "IP Type:  #{virtual_ip_type}"
+              say ''
+
+              fog_lb.wait_for(1800, 5) do 
+                puts "Status: #{state}"
+                puts 'Operation complete.' if ready?
+                ready?
+              end
             else
               say ''
               say 'Operation canceled.'
               exit
-            end
-          end 
-            
-          lb = Derecho::Rackspace::Load_Balancer.new
-          
-          if lb.server_exists? server_id
-            fog_lb = lb.create name, server_id, protocol, port, virtual_ip_type
-          
-            say 'Building load balancer:'
-            say "Name:     #{name}"
-            say "ID:       #{fog_lb.id}"
-            say "Protocol: #{protocol}" 
-            say "Port:     #{port}"
-            say "IP Type:  #{virtual_ip_type}"
-            say ''
-            fog_lb.wait_for(1800, 5) do 
-              puts "Status: #{state}"
-              puts 'Operation complete.' if ready?
-              ready?
-            end
+            end            
           else 
             say "#{server_id} is not a valid server id."
           end
@@ -73,39 +68,33 @@ class Derecho
           Derecho::CLI::Subcommand.config_check
           
           if lb_id.nil?
-            lbs = Derecho::Rackspace::Load_Balancer.new.all
-            say 'Available load balancers:'
-            lbs.each_with_index do |lb, index|
-              say Derecho::CLI::View.compile 'lb-list-oneline', lb, :number => index + 1
-            end
-            say ''
-            num = ask('Choose a load balancer number:').to_i
-            index = num - 1
-            say '' 
-            lb = lbs[index]
-            if yes? "Delete load balancer #{lb.name}?"
-              say ''
-              lb_id = lb.id
-            else
-              say ''
-              say 'Operation canceled.'
-              exit
-            end
-          end 
+            fog_lb = Derecho::CLI::Subcommand.prompt_for_lb 
+            lb_id = fog_lb.id
+          end
           
           lb = Derecho::Rackspace::Load_Balancer.new
           
           if lb.exists? lb_id
-            fog_lb = lb.delete lb_id
-          
-            say 'Waiting for load balancer to shut down:'
-            say "Name: #{fog_lb.name}"
-            say "ID:   #{lb_id}"
-            say ''
-            fog_lb.wait_for(1800, 5) do 
-              puts "Status: #{state}"
-              puts 'Operation complete.' if state === 'DELETED'
-              state === 'DELETED'
+            fog_lb ||= lb.get lb_id
+            
+            if yes? "Delete load balancer #{fog_lb.name}?"
+              fog_lb = lb.delete lb_id
+            
+              say ''
+              say 'Waiting for load balancer to shut down:'
+              say "Name: #{fog_lb.name}"
+              say "ID:   #{lb_id}"
+              say ''
+              
+              fog_lb.wait_for(1800, 5) do 
+                puts "Status: #{state}"
+                puts 'Operation complete.' if state === 'DELETED'
+                state === 'DELETED'
+              end
+            else
+              say ''
+              say 'Operation canceled.'
+              exit
             end
           else
             say "#{lb_id} is not a valid load balancer id."
@@ -113,17 +102,94 @@ class Derecho
         end
         
         desc 'attach [lb-id] [server-id]', 'Attach a server to a load balancer'
-        def attach lb_id, server_id
+        def attach lb_id = nil, server_id = nil
           Derecho::CLI::Subcommand.config_check
+          
+          if lb_id.nil?
+            fog_lb = Derecho::CLI::Subcommand.prompt_for_lb if lb_id.nil?
+            lb_id = fog_lb.id
+          end
+          
+          if server_id.nil?
+            fog_srv = Derecho::CLI::Subcommand.prompt_for_server 
+            server_id = fog_srv.id
+          end
+          
           lb = Derecho::Rackspace::Load_Balancer.new
-          lb.attach_node lb_id, server_id
+          
+          if lb.exists? lb_id
+            if lb.server_exists? server_id
+              fog_srv ||= Derecho::Rackspace::Server.new.get server_id
+              fog_lb ||= lb.get lb_id
+              
+              if !lb.is_attached? lb_id, server_id
+                if yes? "Attach server #{fog_srv.name} to load balancer #{fog_lb.name}?"
+                  fog_lb = lb.attach lb_id, server_id
+                  
+                  say ''
+                  say "Attaching server #{fog_srv.name} to load balancer #{fog_lb.name}:"
+                  say ''
+                
+                  fog_lb.wait_for(1800, 5) do 
+                    puts "Status: #{state}"
+                    puts 'Operation complete.' if state === 'ACTIVE'
+                    state === 'ACTIVE'
+                  end
+                end
+              else
+                say "#{fog_srv.name} is already attached to #{fog_lb.name}."
+              end
+            else
+              say "#{server_id} is not a valid server id."
+            end
+          else
+            say "#{lb_id} is not a valid load balancer id."
+          end
         end
         
-        desc 'detach [lb-id] [server-id]', 'Detach a server from a load balancer'
-        def detach lb_id, server_id
+        desc 'detach [lb-id] [node-id]', 'Detach a server from a load balancer'
+        def detach lb_id = nil, node_id = nil
           Derecho::CLI::Subcommand.config_check
           lb = Derecho::Rackspace::Load_Balancer.new
-          lb.detach_node lb_id, server_id
+          
+          if lb.exists? lb_id
+            if lb.node_exists? node_id
+              
+              # prompt for ok
+              exit
+              
+              fog_lb = lb.detach lb_id, node_id
+              fog_lb.wait_for(1800, 5) do 
+                puts "Status: #{state}"
+                puts 'Operation complete.' if state === 'DELETED'
+                state === 'DELETED'
+              end
+            else
+              say "#{node_id} is not a valid node id."
+            end
+          else
+            say "#{lb_id} is not a valid load balancer id."
+          end
+        end
+        
+        desc 'nodes [lb-id]', 'List a cloud load balancer\'s nodes'
+        def nodes lb_id = nil
+          Derecho::CLI::Subcommand.config_check
+          
+          if lb_id.nil?
+            fog_lb = Derecho::CLI::Subcommand.prompt_for_lb if lb_id.nil?
+            lb_id = fog_lb.id
+          end
+          
+          nodes = Derecho::Rackspace::Load_Balancer.new.get_nodes lb_id
+          
+          puts nodes.first.to_json
+          exit
+          
+          nodes.each_with_index do |lb, index|
+            say Derecho::CLI::View.compile 'node-list-oneline', lb
+            say '' unless index == lbs.size - 1
+          end
         end
         
       end
