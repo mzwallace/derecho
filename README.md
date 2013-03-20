@@ -11,7 +11,7 @@ $ derecho scale test=4 # scale the test role type to 4 nodes
 
 ## What's actually working?
 
-I'll try to keep a summary of the tasks that are working below.  Since this is a work in progress, the documentation will likely be consistant with the gem as if you downloaded it directly from the repo (not the RubyGems.org version, but try checking the --pre).
+I'll try to keep a summary of the tasks that are working below.  Since this is a work in progress, the documentation will likely be consistant with the gem as if you downloaded it directly from this repo (not the RubyGems.org version, but try checking the --pre).
 
 #### All Tasks
 <pre>
