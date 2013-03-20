@@ -101,6 +101,23 @@ class Derecho
           end
         end
         
+        desc 'nodes [lb-id]', 'List a cloud load balancer\'s nodes'
+        def nodes lb_id = nil
+          Derecho::CLI::Subcommand.config_check
+          
+          if lb_id.nil?
+            fog_lb = Derecho::CLI::Subcommand.prompt_for_lb if lb_id.nil?
+            lb_id = fog_lb.id
+          end
+          
+          nodes = Derecho::Rackspace::Load_Balancer.new.get_nodes lb_id
+          
+          nodes.each_with_index do |node, index|
+            say Derecho::CLI::View.compile 'node-list-detailed', node
+            say '' unless index == nodes.size - 1
+          end
+        end
+        
         desc 'attach [lb-id] [server-id]', 'Attach a server to a load balancer'
         def attach lb_id = nil, server_id = nil
           Derecho::CLI::Subcommand.config_check
@@ -135,6 +152,10 @@ class Derecho
                     puts 'Operation complete.' if state === 'ACTIVE'
                     state === 'ACTIVE'
                   end
+                else
+                  say ''
+                  say 'Operation canceled.'
+                  exit
                 end
               else
                 say "#{fog_srv.name} is already attached to #{fog_lb.name}."
@@ -152,43 +173,49 @@ class Derecho
           Derecho::CLI::Subcommand.config_check
           lb = Derecho::Rackspace::Load_Balancer.new
           
+          if lb_id.nil?
+            fog_lb = Derecho::CLI::Subcommand.prompt_for_lb if lb_id.nil?
+            lb_id = fog_lb.id
+          end
+          
+          if node_id.nil?
+            nodes = lb.get_nodes lb_id
+          
+            say 'Available nodes:'
+            nodes.each_with_index do |node, index|
+              say Derecho::CLI::View.compile 'node-list-oneline', node, :number => index + 1
+            end
+            
+            shell.say ''
+            num = shell.ask('Choose a node number:').to_i
+            index = num - 1
+            shell.say '' 
+            fog_node = nodes[index]
+            node_id = fog_node.id
+          end
+          
           if lb.exists? lb_id
-            if lb.node_exists? node_id
+            if lb.node_exists? lb_id, node_id
+              fog_lb ||= lb.get lb_id
+              fog_node ||= lb.get_node lb_id, node_id
               
-              # prompt for ok
-              exit
-              
-              fog_lb = lb.detach lb_id, node_id
-              fog_lb.wait_for(1800, 5) do 
-                puts "Status: #{state}"
-                puts 'Operation complete.' if state === 'DELETED'
-                state === 'DELETED'
+              if yes? "Detach node #{fog_node.address} from load balancer #{fog_lb.name}?"
+                fog_lb = lb.detach lb_id, node_id
+                fog_lb.wait_for(1800, 5) do 
+                  puts "Status: #{state}"
+                  puts 'Operation complete.' if state === 'ACTIVE'
+                  state === 'ACTIVE'
+                end
+              else
+                say ''
+                say 'Operation canceled.'
+                exit
               end
             else
               say "#{node_id} is not a valid node id."
             end
           else
             say "#{lb_id} is not a valid load balancer id."
-          end
-        end
-        
-        desc 'nodes [lb-id]', 'List a cloud load balancer\'s nodes'
-        def nodes lb_id = nil
-          Derecho::CLI::Subcommand.config_check
-          
-          if lb_id.nil?
-            fog_lb = Derecho::CLI::Subcommand.prompt_for_lb if lb_id.nil?
-            lb_id = fog_lb.id
-          end
-          
-          nodes = Derecho::Rackspace::Load_Balancer.new.get_nodes lb_id
-          
-          puts nodes.first.to_json
-          exit
-          
-          nodes.each_with_index do |lb, index|
-            say Derecho::CLI::View.compile 'node-list-oneline', lb
-            say '' unless index == lbs.size - 1
           end
         end
         

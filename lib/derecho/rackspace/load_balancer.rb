@@ -47,6 +47,7 @@ class Derecho
       def get_node lb_id, node_id
         nodes = get_nodes lb_id 
         nodes.select { |node| node.id == node_id }
+        nodes.first
       end
       
       def exists? lb_id
@@ -54,8 +55,8 @@ class Derecho
         !lb.nil?
       end
       
-      def node_exists? node_id
-        node = get_node node_id
+      def node_exists? lb_id, node_id
+        node = get_node lb_id, node_id
         !node.nil?
       end
       
@@ -99,7 +100,7 @@ class Derecho
           lb = get lb_id
           nodes = get_nodes lb_id
         
-          if nodes.count > 1 and node_exists? node_id
+          if nodes.count > 1 and node_exists? lb_id, node_id
             node = get_node lb_id, node_id
             node.destroy
           end
