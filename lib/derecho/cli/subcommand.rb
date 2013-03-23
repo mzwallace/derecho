@@ -3,18 +3,19 @@ class Derecho
     module Subcommand
       
       module_function
-    
+
       def config_check
-        Derecho::CLI::Subcommand::Config.new.check
+        puts self.constants
+        Config.new.check
       end
       
       def prompt_for_server
         shell = Thor::Shell::Basic.new
-        srvs = Derecho::Rackspace::Server.new.all
+        srvs = Rackspace::Server.new.all
         
         shell.say 'Available servers:'
         srvs.each_with_index do |srv, index|
-          shell.say Derecho::CLI::View.compile 'srv-list-oneline', srv, :number => index + 1
+          shell.say View.compile 'srv-list-oneline', srv, :number => index + 1
         end
         
         shell.say ''
@@ -26,11 +27,11 @@ class Derecho
       
       def prompt_for_lb
         shell = Thor::Shell::Basic.new
-        lbs = Derecho::Rackspace::Load_Balancer.new.all
+        lbs = Rackspace::Load_Balancer.new.all
         
         shell.say 'Available load balancers:'
         lbs.each_with_index do |lb, index|
-          shell.say Derecho::CLI::View.compile 'lb-list-oneline', lb, :number => index + 1
+          shell.say View.compile 'lb-list-oneline', lb, :number => index + 1
         end
         
         shell.say ''

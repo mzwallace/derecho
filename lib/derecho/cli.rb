@@ -1,4 +1,3 @@
-$:.unshift "#{File.dirname(__FILE__)}/../../lib"
 require 'derecho'
 require 'derecho/thor'
 require 'derecho/cli/subcommand'
@@ -16,29 +15,29 @@ class Derecho
     end
         
     desc 'config', 'Manage config settings'
-    subcommand 'config', Derecho::CLI::Subcommand::Config
+    subcommand 'config', Subcommand::Config
 
     desc 'lb', 'Manage cloud load balancers'
-    subcommand 'lb', Derecho::CLI::Subcommand::Lb
+    subcommand 'lb', Subcommand::Lb
 
     desc 'srv', 'Manage cloud servers'
-    subcommand 'srv', Derecho::CLI::Subcommand::Srv
+    subcommand 'srv', Subcommand::Srv
       
     desc 'init', 'Create a .derecho file in this directory'
     def init
-      if File.exists? File.expand_path Derecho::Config.new.path
+      if Config.new.exists?
         say 'You have already initialized Derecho in this directory.'
         say ''
-        Derecho::CLI::Subcommand::Config.new.show
+        Subcommand::Config.new.show
       else
-        Derecho::CLI::Subcommand::Config.new.setup
+        Subcommand::Config.new.setup
       end
     end
     
     map %w(-v --version) => :version
     desc 'version', 'Show version number'
     def version
-      say "v#{Derecho::VERSION}"
+      say "v#{VERSION}"
     end
     
   end

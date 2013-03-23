@@ -16,12 +16,13 @@ class Derecho
           @config.read
         
           say "Read from: #{@config.path}"
-        
+          say ''
+          
           if keys.any?
             settings = keys.inject(@config.settings, &:fetch)
-            say settings.to_yaml.sub('---', '')
+            say settings
           else
-            say @config.settings.to_yaml.sub('---', '')
+            say @config.settings.to_yaml
           end
         end
 
@@ -45,7 +46,7 @@ class Derecho
       
         desc 'setup', 'This will create / overwrite your .derecho file'
         def setup
-          if File.exists? File.expand_path @config.path
+          if @config.exists?
             unless yes? 'You already have a .derecho file in this directory, do you want to overwrite it?'
               exit
             end
@@ -72,11 +73,11 @@ class Derecho
         no_tasks do
         
           def check
-            unless @config.file_exists
+            unless @config.exists?
               if yes? 'There is no .derecho file in this directory, would you like to setup one now?'
                 setup
               else
-                say 'To continue you must setup a .derecho file in this directory'
+                say 'To continue you must setup a .derecho file in this directory.'
                 exit
               end
             end
