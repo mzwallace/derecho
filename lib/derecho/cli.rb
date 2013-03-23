@@ -17,10 +17,10 @@ class Derecho
     desc 'config', 'Manage config settings'
     subcommand 'config', Subcommand::Config
 
-    desc 'lb', 'Manage cloud load balancers'
+    desc 'lb', 'Manage load balancers'
     subcommand 'lb', Subcommand::Lb
 
-    desc 'srv', 'Manage cloud servers'
+    desc 'srv', 'Manage servers'
     subcommand 'srv', Subcommand::Srv
       
     desc 'init', 'Create a .derecho file in this directory'

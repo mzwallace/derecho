@@ -7,11 +7,11 @@ Heroku ease of use + robust Chef cookbooks + solid hosting on Rackspace
 ```
 $ derecho scale test=4 # scale the test role type to 4 nodes
 ```
-<a href="https://github.com/mzwallace/derecho/wiki/The-Plan">Wiki: The Plan Extended.</a>
+<a href="https://github.com/mzwallace/derecho/wiki/The-Plan">Wiki: The extended plan</a>
 
 ## What's actually working?
 
-<b>Right now there is only support for viewing / creating / deleting load balancers and viewing server stats, more to come very soon.</b>
+I'll try to keep a summary of the tasks that are working below.  Since this is a work in progress, the documentation will likely be consistant with the gem as if you downloaded it directly from this repo (not the RubyGems.org version, but try checking the --pre).
 
 #### All Tasks
 <pre>
@@ -19,20 +19,26 @@ Tasks:
   derecho config          # Manage config settings
   derecho help [command]  # Find help on a specific command
   derecho init            # Create a .derecho file in this directory
-  derecho lb              # Manage cloud load balancers
-  derecho srv             # Manage cloud servers
+  derecho lb              # Manage load balancers
+  derecho srv             # Manage servers
   derecho version         # Show version number
 </pre>
 
 #### Load Balancers
+
+All arguments are optional! If you leave them out, you will be prompted with a list of options to choose from.  Also, nothing will happen until you confirm, so go nuts!
+
 <pre>
 $ derecho lb
 
 Tasks:
+  derecho lb attach [lb-id] [server-id]          # Attach a server to a load balancer
   derecho lb create [lb-name] [first-server-id]  # Create a load balancer and attach a server to it
   derecho lb delete [lb-id]                      # Delete a load balancer
+  derecho lb detach [lb-id] [node-id]            # Detach a node from a load balancer
   derecho lb help [command]                      # Find help on a specific command
-  derecho lb list                                # List all cloud load balancers
+  derecho lb list                                # List all load balancers
+  derecho lb nodes [lb-id]                       # List a load balancer's nodes
 </pre>
 
 <a href="https://github.com/mzwallace/derecho/wiki/Load-Balancers">Wiki: Load balancer examples</a>
@@ -43,7 +49,7 @@ $ derecho srv
 
 Tasks:
   derecho srv help [command]  # Find help on a specific command
-  derecho srv list            # List all cloud servers
+  derecho srv list            # List all servers
 </pre>
 
 <a href="https://github.com/mzwallace/derecho/wiki/Servers">Wiki: Server examples</a>
