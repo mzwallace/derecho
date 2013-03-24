@@ -6,11 +6,13 @@ class Derecho
         desc 'list', 'List all load balancers'
         option :detailed, :aliases => '-d', :type => :boolean
         def list
-          Derecho::CLI::Subcommand.config_check
-          lb = Derecho::Rackspace::Load_Balancer.new
+          puts Class.constants
+          exit
+          Subcommand.config_check
+          lb = Rackspace::Load_Balancer.new
           lbs = lb.all
           lbs.each_with_index do |lb, index|
-            say Derecho::CLI::View.compile options[:detailed] ? 'lb-list-detailed' : 'lb-list-oneline', lb
+            say CLI::View.compile options[:detailed] ? 'lb-list-detailed' : 'lb-list-oneline', lb
             say '' if options[:detailed] and index < lbs.size - 1
           end
         end
@@ -20,7 +22,7 @@ class Derecho
         option :port,            :aliases => '-p', :default => 80,     :desc => 'e.g. 80, 443'
         option :virtual_ip_type, :aliases => '-t', :default => 'PUBLIC', :desc => 'e.g. PUBLIC, SERVICENET'
         def create name = nil, server_id = nil, protocol = 'HTTP', port = 80, virtual_ip_type = 'PUBLIC'
-          Derecho::CLI::Subcommand.config_check
+          Subcommand.config_check
           
           if name.nil?
             name = ask 'What do you want to name your load balancer?'
@@ -28,11 +30,11 @@ class Derecho
           end
           
           if server_id.nil?
-            fog_srv = Derecho::CLI::Subcommand.prompt_for_server 
+            fog_srv = Subcommand.prompt_for_server 
             server_id = fog_srv.id
           end
           
-          lb = Derecho::Rackspace::Load_Balancer.new
+          lb = Rackspace::Load_Balancer.new
           
           if lb.server_exists? server_id
             fog_srv ||= Derecho::Rackspace::Server.new.get server_id

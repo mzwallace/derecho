@@ -14,15 +14,14 @@ class Derecho
         def show *keys
           check
           @config.read
-        
           say "Read from: #{@config.path}"
           say ''
           
           if keys.any?
             settings = keys.inject(@config.settings, &:fetch)
-            say settings
+            say Derecho::Config.prepare settings
           else
-            say Derecho::Config.format @config.settings
+            say Derecho::Config.prepare @config.settings
           end
         end
 
@@ -30,18 +29,11 @@ class Derecho
         def set *keys
           check
           @config.read
-        
-          # figure out the hash from the array input
+          
           hash = keys.reverse.inject { |value, key| { key => value } }
-        
-          # deep merge it with current config
-          deep_merge!(@config.settings, hash)
-        
-          # write to file
+          deep_merge! @config.settings, hash
           @config.write
-        
-          # output what they have changed
-          Derecho::Config.format @config.settings
+          say Derecho::Config.prepare hash
         end
       
         desc 'setup', 'This will create / overwrite your .derecho file'

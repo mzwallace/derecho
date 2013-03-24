@@ -5,9 +5,7 @@ class Derecho
       module_function
 
       def config_check
-        puts self.constants
-        exit
-        #Config.new.check
+        Config.new.check
       end
       
       def prompt_for_server

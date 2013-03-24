@@ -13,20 +13,20 @@ class Derecho
     def path= obj; @@path = obj; end
     
     def initialize config = {}
-      config.is_a?(Hash) ? @settings = config : read(config) 
+      config.is_a?(Hash) ? @settings = config : read(config)
     end
     
     def read path = nil
       path ||= @@path
-      @@path = File.expand_path path 
-      @settings = YAML.load_file @@path
+      @@path = File.expand_path path
+      @settings = YAML.load_file(@@path) || {}
     end
     
     def write path = nil
       path ||= @@path
       @@path = File.expand_path path
       file = File.open @@path, 'w+'
-      file.puts format @settings
+      file.puts Config.prepare @settings
       file.close
     end
     
@@ -48,8 +48,10 @@ class Derecho
         File.exists? File.expand_path @@path
       end
       
-      def format hash
-        hash.to_yaml.sub('---', '').split('\n').map(&:rstrip).join('\n').strip
+      def prepare hash
+        string = hash.to_yaml
+        string = string.sub('---', '').sub('...', '')
+        string = string.split('\n').map(&:rstrip).join('\n').strip
       end
     
     end
