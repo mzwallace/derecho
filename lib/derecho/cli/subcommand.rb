@@ -6,7 +6,8 @@ class Derecho
 
       def config_check
         puts self.constants
-        Config.new.check
+        exit
+        #Config.new.check
       end
       
       def prompt_for_server

@@ -22,7 +22,7 @@ class Derecho
             settings = keys.inject(@config.settings, &:fetch)
             say settings
           else
-            say @config.settings.to_yaml
+            say Derecho::Config.format @config.settings
           end
         end
 
@@ -41,7 +41,7 @@ class Derecho
           @config.write
         
           # output what they have changed
-          say hash.to_yaml.sub('---', '')
+          Derecho::Config.format @config.settings
         end
       
         desc 'setup', 'This will create / overwrite your .derecho file'

@@ -19,16 +19,14 @@ class Derecho
     def read path = nil
       path ||= @@path
       @@path = File.expand_path path 
-      
       @settings = YAML.load_file @@path
     end
     
     def write path = nil
       path ||= @@path
       @@path = File.expand_path path
-      
       file = File.open @@path, 'w+'
-      file.puts format @settings 
+      file.puts format @settings
       file.close
     end
     
@@ -38,6 +36,10 @@ class Derecho
     
     def []= key, value
       @settings[key] = value
+    end
+    
+    def exists?
+      self.class.exists?
     end
     
     class << self
