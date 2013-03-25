@@ -31,9 +31,14 @@ class Derecho
           @config.read
           
           hash = keys.reverse.inject { |value, key| { key => value } }
-          deep_merge! @config.settings, hash
-          @config.write
-          say Derecho::Config.prepare hash
+          
+          if yes? "#{Derecho::Config.prepare hash}\n\nWrite this to the config file?"
+            deep_merge! @config.settings, hash
+            @config.write
+          else
+            say ''
+            say 'Canceled.'
+          end
         end
       
         desc 'setup', 'This will create / overwrite your .derecho file'
@@ -43,22 +48,24 @@ class Derecho
               exit
             end
           end
-        
-          rackspace_username = ask 'Enter Rackspace Username:'
-          rackspace_api_key  = ask 'Enter Rackspace API Key:'
-          rackspace_region   = ask 'Enter Rackspace Region:'
+          
+          say ''
+          username = ask 'Enter Rackspace Username:'
+          api_key  = ask 'Enter Rackspace API Key:'
+          region   = ask 'Enter Rackspace Region:'
                 
           @config.settings = { 
             'accounts' => {
               'rackspace' => {
-                'username' => rackspace_username,
-                'api_key' => rackspace_api_key,
-                'region' => rackspace_region
+                'username' => username,
+                'api_key'  => api_key,
+                'region'   => region
               }
             }
           }
         
           @config.write
+          say ''
           show
         end
       

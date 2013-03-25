@@ -5,7 +5,15 @@ require 'derecho/cli/view'
 
 class Derecho
   class CLI < Derecho::Thor
-        
+    
+    def initialize *args
+      super
+      # adds space at the beginning of every output the cli makes
+      say ''
+      # adds space at the end of every output the cli makes
+      ObjectSpace.define_finalizer self, proc { puts '' }
+    end
+    
     desc 'config', 'Manage config settings'
     subcommand 'config', Subcommand::Config
 

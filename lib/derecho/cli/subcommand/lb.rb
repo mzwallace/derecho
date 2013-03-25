@@ -6,8 +6,6 @@ class Derecho
         desc 'list', 'List all load balancers'
         option :detailed, :aliases => '-d', :type => :boolean
         def list
-          puts Class.constants
-          exit
           Subcommand.config_check
           lb = Rackspace::Load_Balancer.new
           lbs = lb.all
@@ -36,8 +34,8 @@ class Derecho
           
           lb = Rackspace::Load_Balancer.new
           
-          if lb.server_exists? server_id
-            fog_srv ||= Derecho::Rackspace::Server.new.get server_id
+          if Rackspace::Server.exists? server_id
+            fog_srv ||= Rackspace::Server.new.get server_id
             
             if yes? "Create load balancer #{name} with attached server #{fog_srv.name}?"
               fog_lb = lb.create name, server_id, protocol, port, virtual_ip_type
@@ -68,14 +66,14 @@ class Derecho
         
         desc 'delete [lb-id]', 'Delete a load balancer'
         def delete lb_id = nil
-          Derecho::CLI::Subcommand.config_check
+          Subcommand.config_check
           
           if lb_id.nil?
-            fog_lb = Derecho::CLI::Subcommand.prompt_for_lb 
+            fog_lb = Subcommand.prompt_for_lb 
             lb_id = fog_lb.id
           end
           
-          lb = Derecho::Rackspace::Load_Balancer.new
+          lb = Rackspace::Load_Balancer.new
           
           if lb.exists? lb_id
             fog_lb ||= lb.get lb_id
@@ -107,45 +105,45 @@ class Derecho
         desc 'nodes [lb-id]', 'List a load balancer\'s nodes'
         option :detailed, :aliases => '-d', :type => :boolean
         def nodes lb_id = nil
-          Derecho::CLI::Subcommand.config_check
+          Subcommand.config_check
           
           if lb_id.nil?
-            fog_lb = Derecho::CLI::Subcommand.prompt_for_lb if lb_id.nil?
+            fog_lb = Subcommand.prompt_for_lb if lb_id.nil?
             lb_id = fog_lb.id
           end
           
-          nodes = Derecho::Rackspace::Load_Balancer.new.get_nodes lb_id
+          nodes = Rackspace::Load_Balancer.new.get_nodes lb_id
           
           nodes.each_with_index do |node, index|
-            say Derecho::CLI::View.compile options[:detailed] ? 'node-list-detailed' : 'node-list-oneline', node
+            say View.compile options[:detailed] ? 'node-list-detailed' : 'node-list-oneline', node
             say '' if options[:detailed] and index < nodes.size - 1
           end
         end
         
         desc 'attach [lb-id] [server-id]', 'Attach a server to a load balancer'
-        def attach lb_id = nil, server_id = nil
-          Derecho::CLI::Subcommand.config_check
+        def attach lb_id = nil, srv_id = nil
+          Subcommand.config_check
           
           if lb_id.nil?
-            fog_lb = Derecho::CLI::Subcommand.prompt_for_lb if lb_id.nil?
+            fog_lb = Subcommand.prompt_for_lb if lb_id.nil?
             lb_id = fog_lb.id
           end
           
-          if server_id.nil?
-            fog_srv = Derecho::CLI::Subcommand.prompt_for_server 
-            server_id = fog_srv.id
+          if srv_id.nil?
+            fog_srv = Subcommand.prompt_for_server 
+            srv_id = fog_srv.id
           end
           
-          lb = Derecho::Rackspace::Load_Balancer.new
+          lb = Rackspace::Load_Balancer.new
           
           if lb.exists? lb_id
-            if lb.server_exists? server_id
-              fog_srv ||= Derecho::Rackspace::Server.new.get server_id
+            if Rackspace::Server.exists? srv_id
+              fog_srv ||= Rackspace::Server.new.get srv_id
               fog_lb ||= lb.get lb_id
               
-              if !lb.is_attached? lb_id, server_id
+              if !lb.is_attached? lb_id, srv_id
                 if yes? "Attach server #{fog_srv.name} to load balancer #{fog_lb.name}?"
-                  fog_lb = lb.attach lb_id, server_id
+                  fog_lb = lb.attach lb_id, srv_id
                   
                   say ''
                   say "Attaching server #{fog_srv.name} to load balancer #{fog_lb.name}:"
@@ -165,7 +163,7 @@ class Derecho
                 say "#{fog_srv.name} is already attached to #{fog_lb.name}."
               end
             else
-              say "#{server_id} is not a valid server id."
+              say "#{srv_id} is not a valid server id."
             end
           else
             say "#{lb_id} is not a valid load balancer id."
@@ -174,11 +172,11 @@ class Derecho
         
         desc 'detach [lb-id] [node-id]', 'Detach a node from a load balancer'
         def detach lb_id = nil, node_id = nil
-          Derecho::CLI::Subcommand.config_check
-          lb = Derecho::Rackspace::Load_Balancer.new
+          Subcommand.config_check
+          lb = Rackspace::Load_Balancer.new
           
           if lb_id.nil?
-            fog_lb = Derecho::CLI::Subcommand.prompt_for_lb if lb_id.nil?
+            fog_lb = Subcommand.prompt_for_lb if lb_id.nil?
             lb_id = fog_lb.id
           end
           
@@ -187,7 +185,7 @@ class Derecho
           
             say 'Available nodes:'
             nodes.each_with_index do |node, index|
-              say Derecho::CLI::View.compile 'node-list-oneline', node, :number => index + 1
+              say View.compile 'node-list-oneline', node, :number => index + 1
             end
             
             say ''
@@ -205,6 +203,11 @@ class Derecho
               
               if yes? "Detach node #{fog_node.address} from load balancer #{fog_lb.name}?"
                 fog_lb = lb.detach lb_id, node_id
+                
+                say ''
+                say "Detaching node #{fog_node.address} from load balancer #{fog_lb.name}:"
+                say ''
+                
                 fog_lb.wait_for(1800, 5) do 
                   puts "Status: #{state}"
                   puts 'Operation complete.' if state === 'ACTIVE'

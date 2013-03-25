@@ -6,8 +6,6 @@ class Derecho
         config = Config.new.read
         settings = config['accounts']['rackspace']
         
-        puts $:
-        
         @service = Fog::Rackspace::LoadBalancers.new({
           :rackspace_username    => settings['username'],
           :rackspace_api_key     => settings['api_key'],
@@ -43,6 +41,10 @@ class Derecho
         lb
       end
       
+      def exists? lb_id
+        self.class.exists? lb_id
+      end
+      
       class << self
         
         def exists? lb_id
@@ -56,9 +58,9 @@ class Derecho
         
       end
       
-      def is_server_attached? lb_id, srv_id
-        if exists? lb_id and srv_exists? srv_id  
-          srv = Rackspace::Server.new.get server_id
+      def is_attached? lb_id, srv_id
+        if exists? lb_id and Rackspace::Server.exists? srv_id  
+          srv = Rackspace::Server.new.get srv_id
         
           get_nodes(lb_id).any? do |node| 
             node.address == srv.private_ip_address
@@ -66,16 +68,16 @@ class Derecho
         end
       end
 
-      def attach_server lb_id, server_id, port = nil, condition = 'ENABLED'
-        unless is_server_attached? lb_id, server_id
+      def attach lb_id, srv_id, port = nil, condition = 'ENABLED'
+        unless is_attached? lb_id, srv_id
           lb = get lb_id
-          srv = Rackspace::Server.new.get server_id
+          srv = Rackspace::Server.new.get srv_id
           
           lb.nodes.create(
             :address => srv.private_ip_address,
             :port => port || lb.port,
             :condition => condition
-          ).save
+          )
           
           lb
         else
@@ -100,18 +102,16 @@ class Derecho
         !node.nil?
       end
       
-      def detach_node lb_id, node_id
-        if is_node_attached? lb_id, node_id
-          lb = get lb_id
-          nodes = get_nodes lb_id
-        
-          if nodes.count > 1 and node_exists? lb_id, node_id
-            node = get_node lb_id, node_id
-            node.destroy
-          end
-          
-          lb
+      def detach lb_id, node_id
+        lb = get lb_id
+        nodes = get_nodes lb_id
+      
+        if nodes.count > 1 and node_exists? lb_id, node_id
+          node = get_node lb_id, node_id
+          node.destroy
         end
+        
+        lb
       end
       
     end
